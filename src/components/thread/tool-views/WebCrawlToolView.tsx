@@ -191,6 +191,7 @@ export function WebCrawlToolView({
                 <div className="group relative">
                   <div className="flex items-center gap-3 p-4 bg-zinc-50 dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors rounded-xl border border-zinc-200 dark:border-zinc-800">
                     {favicon && (
+                      /* eslint-disable-next-line @next/next/no-img-element */
                       <img
                         src={favicon}
                         alt=""

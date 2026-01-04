@@ -2,21 +2,14 @@ import React from 'react';
 import {
     FileText, FileImage, FileCode, FileSpreadsheet, FileVideo,
     FileAudio, FileType, Database, Archive, File, ExternalLink,
-    Loader2, Download, ChevronDown
+    Loader2, Download
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { AttachmentGroup } from './attachment-group';
 import { HtmlRenderer } from './preview-renderers/html-renderer';
 import { MarkdownRenderer } from './preview-renderers/markdown-renderer';
 import { CsvRenderer } from './preview-renderers/csv-renderer';
-import { XlsxRenderer } from './preview-renderers/xlsx-renderer';
 import { PdfRenderer as PdfPreviewRenderer } from './preview-renderers/pdf-renderer';
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger
-} from '@/components/ui/dropdown-menu';
 
 import { useFileContent, useImageContent } from '@/hooks/react-query/files';
 import { useAuth } from '@/components/AuthProvider';
@@ -194,10 +187,6 @@ export function FileAttachment({
     // Simplified state management
     const [hasError, setHasError] = React.useState(false);
 
-    // XLSX sheet management
-    const [xlsxSheetIndex, setXlsxSheetIndex] = React.useState(0);
-    const [xlsxSheetNames, setXlsxSheetNames] = React.useState<string[]>([]);
-
     // Basic file info
     const filename = filepath.split('/').pop() || 'file';
     const extension = filename.split('.').pop()?.toLowerCase() || '';
@@ -211,16 +200,14 @@ export function FileAttachment({
     const isImage = fileType === 'image';
     const isHtmlOrMd = extension === 'html' || extension === 'htm' || extension === 'md' || extension === 'markdown';
     const isCsv = extension === 'csv' || extension === 'tsv';
-    const isXlsx = extension === 'xlsx' || extension === 'xls';
     const isPdf = extension === 'pdf';
     const isGridLayout = customStyle?.gridColumn === '1 / -1' || Boolean(customStyle && ('--attachment-height' in customStyle));
     // Define isInlineMode early, before any hooks
     const isInlineMode = !isGridLayout;
-    const shouldShowPreview = (isHtmlOrMd || isCsv || isXlsx || isPdf) && showPreview && collapsed === false;
+    const shouldShowPreview = (isHtmlOrMd || isCsv || isPdf) && showPreview && collapsed === false;
 
     // Use the React Query hook to fetch file content
     // For CSV files, always try to load content for better preview experience
-    // For XLSX files, we need binary data which is handled by useImageContent
     const shouldLoadContent = (isHtmlOrMd || isCsv) && (shouldShowPreview || isCsv);
     const {
         data: fileContent,
@@ -251,47 +238,12 @@ export function FileAttachment({
         isPdf && shouldShowPreview ? filepath : undefined
     );
 
-    // For XLSX files we fetch binary data and convert to base64
-    const {
-        data: xlsxBlobUrl,
-        isLoading: xlsxLoading,
-        error: xlsxError
-    } = useImageContent(
-        isXlsx && shouldShowPreview && sandboxId ? sandboxId : undefined,
-        isXlsx && shouldShowPreview ? filepath : undefined
-    );
-
     // Set error state based on query errors
     React.useEffect(() => {
-        if (fileContentError || imageError || pdfError || xlsxError) {
+        if (fileContentError || imageError || pdfError) {
             setHasError(true);
         }
-    }, [fileContentError, imageError, pdfError, xlsxError]);
-
-    // Parse XLSX to get sheet names when blob URL is available
-    React.useEffect(() => {
-        if (isXlsx && xlsxBlobUrl && shouldShowPreview) {
-            const parseSheetNames = async () => {
-                try {
-                    // Import XLSX dynamically to avoid bundle size issues
-                    const XLSX = await import('xlsx');
-
-                    // Convert blob URL to binary data
-                    const response = await fetch(xlsxBlobUrl);
-                    const arrayBuffer = await response.arrayBuffer();
-
-                    // Read workbook
-                    const workbook = XLSX.read(arrayBuffer, { type: 'array' });
-                    setXlsxSheetNames(workbook.SheetNames);
-                } catch (error) {
-                    console.error('Failed to parse XLSX sheet names:', error);
-                    setXlsxSheetNames([]);
-                }
-            };
-
-            parseSheetNames();
-        }
-    }, [isXlsx, xlsxBlobUrl, shouldShowPreview]);
+    }, [fileContentError, imageError, pdfError]);
 
     const handleClick = () => {
         if (onClick) {
@@ -485,9 +437,7 @@ export function FileAttachment({
         'md': MarkdownRenderer,
         'markdown': MarkdownRenderer,
         'csv': CsvRenderer,
-        'tsv': CsvRenderer,
-        'xlsx': XlsxRenderer,
-        'xls': XlsxRenderer
+        'tsv': CsvRenderer
     };
 
     // HTML/MD/CSV/PDF preview when not collapsed and in grid layout
@@ -502,7 +452,7 @@ export function FileAttachment({
                     "rounded-xl border bg-card overflow-hidden pt-10", // Consistent card styling with header space
                     isPdf ? "!min-h-[200px] sm:min-h-0 sm:h-[400px] max-h-[500px] sm:!min-w-[300px]" :
                         isHtmlOrMd ? "!min-h-[200px] sm:min-h-0 sm:h-[400px] max-h-[600px] sm:!min-w-[300px]" :
-                            (isCsv || isXlsx) ? "min-h-[300px] h-full" : // Let CSV and XLSX take full height
+                            isCsv ? "min-h-[300px] h-full" : // Let CSV take full height
                                 standalone ? "min-h-[300px] h-auto" : "h-[300px]", // Better height handling for standalone
                     className
                 )}
@@ -524,7 +474,7 @@ export function FileAttachment({
                         contain: (isPdf || isHtmlOrMd) ? 'layout size' : undefined
                     }}
                 >
-                    {/* Render PDF, XLSX, or text-based previews */}
+                    {/* Render PDF or text-based previews */}
                     {!hasError && (
                         <>
                             {isPdf && (() => {
@@ -536,18 +486,7 @@ export function FileAttachment({
                                     />
                                 ) : null;
                             })()}
-                            {isXlsx && (() => {
-                                const xlsxUrlForRender = localPreviewUrl || (sandboxId ? (xlsxBlobUrl ?? null) : fileUrl);
-                                return xlsxUrlForRender ? (
-                                    <XlsxRenderer
-                                        content={xlsxUrlForRender}
-                                        className="h-full w-full"
-                                        activeSheetIndex={xlsxSheetIndex}
-                                        onSheetChange={(index) => setXlsxSheetIndex(index)}
-                                    />
-                                ) : null;
-                            })()}
-                            {!isPdf && !isXlsx && fileContent && Renderer && (
+                            {!isPdf && fileContent && Renderer && (
                                 <Renderer
                                     content={fileContent}
                                     previewUrl={fileUrl}
@@ -601,14 +540,8 @@ export function FileAttachment({
                         </div>
                     )}
 
-                    {isXlsx && xlsxLoading && !xlsxBlobUrl && (
-                        <div className="absolute inset-0 flex items-center justify-center bg-background/50 z-10">
-                            <Loader2 className="h-8 w-8 text-primary animate-spin" />
-                        </div>
-                    )}
-
                     {/* Empty content state - show when not loading and no content yet */}
-                    {!isPdf && !isXlsx && !fileContent && !fileContentLoading && !hasError && (
+                    {!isPdf && !fileContent && !fileContentLoading && !hasError && (
                         <div className="h-full w-full flex flex-col items-center justify-center p-4 pointer-events-none">
                             <div className="text-muted-foreground text-sm mb-2">
                                 Preview available
@@ -624,31 +557,6 @@ export function FileAttachment({
                 <div className="absolute top-0 left-0 right-0 bg-accent p-2 h-[40px] z-10 flex items-center justify-between">
                     <div className="flex items-center gap-2 min-w-0">
                         <div className="text-sm font-medium truncate">{filename}</div>
-                        {/* XLSX Sheet Selector */}
-                        {isXlsx && xlsxSheetNames.length > 1 && (
-                            <DropdownMenu>
-                                <DropdownMenuTrigger asChild>
-                                    <button className="flex items-center gap-1 px-2 py-1 rounded-xl hover:bg-background/70 text-xs font-medium transition-colors">
-                                        <span className="truncate max-w-[100px]">{xlsxSheetNames[xlsxSheetIndex] || 'Sheet 1'}</span>
-                                        <ChevronDown size={12} />
-                                    </button>
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent align="start" className="min-w-[120px]">
-                                    {xlsxSheetNames.map((sheetName, index) => (
-                                        <DropdownMenuItem
-                                            key={index}
-                                            onClick={() => setXlsxSheetIndex(index)}
-                                            className={cn(
-                                                "text-xs cursor-pointer",
-                                                index === xlsxSheetIndex && "bg-accent"
-                                            )}
-                                        >
-                                            {sheetName}
-                                        </DropdownMenuItem>
-                                    ))}
-                                </DropdownMenuContent>
-                            </DropdownMenu>
-                        )}
                     </div>
                     <div className="flex items-center gap-1">
                         {/* <button
