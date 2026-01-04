@@ -38,9 +38,12 @@ export function FooterSection() {
                   priority
                 />
               </Link>
-              <p className="tracking-tight text-muted-foreground font-medium">
-                {siteConfig.hero.description}
-              </p>
+              <Link
+                href="mailto:hello@dimatic.com.au"
+                className="tracking-tight text-muted-foreground font-medium hover:text-primary transition-colors"
+              >
+                hello@dimatic.com.au
+              </Link>
 
               <div className="flex items-center gap-4">
             <a
@@ -108,10 +111,10 @@ export function FooterSection() {
             </div>
             <div className="pt-5 md:w-1/2">
           <div className="flex flex-col md:flex-row md:items-center md:justify-end gap-y-5 gap-x-8 lg:pl-10">
-            <Link href="/privacy" className="text-muted-foreground hover:text-primary transition-colors">
+            <Link href="/legal?tab=privacy" className="text-muted-foreground hover:text-primary transition-colors">
               Privacy Policy
             </Link>
-            <Link href="/terms" className="text-muted-foreground hover:text-primary transition-colors">
+            <Link href="/legal?tab=terms" className="text-muted-foreground hover:text-primary transition-colors">
               Terms of Service
             </Link>
               </div>
@@ -119,12 +122,6 @@ export function FooterSection() {
           </div>
         </div>
       </div>
-      <Link
-        href="mailto:hello@dimatic.com.au"
-        className="text-muted-foreground hover:text-primary transition-colors"
-      >
-        hello@dimatic.com.au
-      </Link>
     </footer>
   );
 }

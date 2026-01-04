@@ -73,11 +73,10 @@ export const siteConfig = {
   nav: {
     links: [
       { id: 1, name: 'Home', href: '#hero' },
-      { id: 2, name: 'Process', href: '#process' },
-      // { id: 3, name: 'Use Cases', href: '#use-cases' },
-      // { id: 4, name: 'Open Source', href: '#open-source' },
-      // { id: 5, name: 'Pricing', href: '#pricing' },
-      { id: 6, name: 'Enterprise', href: '/enterprise' },
+      { id: 2, name: 'Capabilities', href: '#capabilities' },
+      { id: 3, name: 'Pricing', href: '#pricing' },
+      { id: 4, name: 'FAQ', href: '#faq' },
+      { id: 5, name: 'Enterprise', href: '/enterprise' },
     ],
   },
   hero: {
