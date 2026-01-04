@@ -33,12 +33,12 @@ export default function Home() {
             {/* <DeliverablesSection />             */}
             <BentoSection />
             
-            * <AgentShowcaseSection /> */
+            {/* <AgentShowcaseSection /> */}
             {/* <OpenSourceSection /> */}
-            {/* <PricingSection /> */}
+            <PricingSection />
             {/* <TestimonialSection /> */}
-            {/* <FAQSection /> */}
-            <CTASection />
+            <FAQSection />
+            {/* <CTASection /> */}
             <FooterSection />
           </div>
         </main>

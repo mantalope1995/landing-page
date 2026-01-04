@@ -375,7 +375,7 @@ export function HeroSection() {
           </div>
 
           <div className="flex flex-col items-center w-full max-w-3xl mx-auto gap-2 flex-wrap justify-center px-2 sm:px-0">
-            <div className="w-full relative">
+            {/* <div className="w-full relative">
               <div className="relative z-10">
                 <ChatInput
                   ref={chatInputRef}
@@ -392,14 +392,12 @@ export function HeroSection() {
                   enableAdvancedConfig={false}
                 />
               </div>
-              {/* Subtle glow effect */}
               <div className="absolute -bottom-4 inset-x-0 h-6 bg-secondary/20 blur-xl rounded-full -z-10 opacity-70"></div>
             </div>
-            
-            {/* Examples section - right after chat input */}
+
             <div className="w-full pt-2">
               <Examples onSelectPrompt={setInputValue} count={tablet ? 2 : 4} />
-            </div>
+            </div> */}
           </div>
 
         </div>

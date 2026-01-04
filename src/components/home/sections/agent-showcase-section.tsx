@@ -176,24 +176,25 @@ const AgentGrid = () => {
 
 export function AgentShowcaseSection() {
   return (
-    <section
-      id="agent-showcase"
-      className="flex flex-col items-center justify-center w-full relative"
-    >
-      <div className="relative w-full px-6">
-        <div className="max-w-6xl mx-auto border-l border-r">
-          <SectionHeader>
-            <h2 className="text-3xl md:text-4xl font-medium tracking-tighter text-center text-balance pb-1">
-              Build Your Team
-            </h2>
-            <p className="text-muted-foreground text-center text-balance font-medium">
-              Specialised digital assistants ready to transform your workflow. Choose from our curated team of experts.
-            </p>
-          </SectionHeader>
+    // <section
+    //   id="agent-showcase"
+    //   className="flex flex-col items-center justify-center w-full relative"
+    // >
+    //   <div className="relative w-full px-6">
+    //     <div className="max-w-6xl mx-auto border-l border-r">
+    //       <SectionHeader>
+    //         <h2 className="text-3xl md:text-4xl font-medium tracking-tighter text-center text-balance pb-1">
+    //           Build Your Team
+    //         </h2>
+    //         <p className="text-muted-foreground text-center text-balance font-medium">
+    //           Specialised digital assistants ready to transform your workflow. Choose from our curated team of experts.
+    //         </p>
+    //       </SectionHeader>
 
-          <AgentGrid />
-        </div>
-      </div>
-    </section>
+    //       <AgentGrid />
+    //     </div>
+    //   </div>
+    // </section>
+  null
   );
 }
