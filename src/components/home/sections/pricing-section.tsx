@@ -687,10 +687,10 @@ export function PricingSection({
         {showTitleAndTabs && (
           <SectionHeader>
             <h2 className="text-3xl md:text-4xl font-medium tracking-tighter text-center text-balance">
-              Choose the right plan for your needs
+              Choose the Plan That Fits Your Business
             </h2>
             <p className="text-muted-foreground text-center text-balance font-medium">
-              Start with our free plan or upgrade for more AI token credits
+              Start free, or upgrade when you're ready to tackle bigger projects.
             </p>
           </SectionHeader>
         )}
@@ -731,9 +731,8 @@ export function PricingSection({
       {showInfo && (
         <div className="mt-4 p-4 bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-800 rounded-lg max-w-2xl mx-auto">
           <p className="text-sm text-blue-800 dark:text-blue-200 text-center">
-            <strong>What are AI tokens?</strong> Tokens are units of text that AI models process. 
-            Your plan includes credits to spend on various AI models - the more complex the task, 
-            the more tokens used.
+            <strong>How pricing works:</strong> Think of credits like fuel—the more complex the task,
+            the more fuel it uses. Simple tasks use very little.
           </p>
         </div>
       )}

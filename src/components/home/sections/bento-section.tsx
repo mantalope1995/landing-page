@@ -38,10 +38,10 @@ export function BentoSection() {
         <div className="max-w-6xl mx-auto border-l border-r border-border">
           <SectionHeader>
             <h2 className="text-3xl md:text-4xl font-medium tracking-tighter text-center text-balance pb-1">
-              Create a digital assistant in 3 Simple Steps
+              Set Up Your AI Assistant in 3 Simple Steps
             </h2>
             <p className="text-muted-foreground text-center text-balance font-medium">
-              Customise powerful digital assistants to work on your tailored use cases.
+              Tell Dimatic what you need, connect your tools, and watch it get to work.
             </p>
           </SectionHeader>
 

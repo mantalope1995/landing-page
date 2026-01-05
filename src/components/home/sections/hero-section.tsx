@@ -370,7 +370,7 @@ export function HeroSection() {
               />
             </h1>
             <p className="text-base md:text-lg text-center text-muted-foreground font-medium text-balance leading-relaxed tracking-tight max-w-2xl px-2">
-            Deploy digital assistants to help run your business.
+            Get your own AI assistant to handle the boring work—so you can focus on growing your business.
             </p>
           </div>
 
@@ -422,7 +422,7 @@ export function HeroSection() {
               </button> */}
             </div>
             <DialogDescription className="text-muted-foreground">
-              Sign in or create an account to talk with Suna
+              Sign in or create an account to get started with Dimatic
             </DialogDescription>
           </DialogHeader>
 

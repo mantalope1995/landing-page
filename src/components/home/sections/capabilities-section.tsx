@@ -3,15 +3,15 @@
 import { SectionHeader } from '@/components/home/section-header';
 import { motion, useInView } from 'motion/react';
 import { useRef } from 'react';
-import { 
+import {
   FileText,
-  Image,
+  Mail,
   Presentation,
   Globe,
   BarChart3,
   ShoppingCart,
   Users,
-  Clock 
+  Clock
 } from 'lucide-react';
 
 const capabilities = [
@@ -21,9 +21,9 @@ const capabilities = [
     icon: <FileText className="size-6" />,
   },
   {
-    title: 'Design Graphics & Visuals',
-    description: 'Create logos, social media graphics, infographics, and custom images from just a text description. No design skills required.',
-    icon: <Image className="size-6" />,
+    title: 'Handle Email & Customer Outreach',
+    description: 'Manage email campaigns, follow-ups, and customer communications. Stay organised and never miss an opportunity to connect.',
+    icon: <Mail className="size-6" />,
   },
   {
     title: 'Build Stunning Presentations',
@@ -71,10 +71,10 @@ export function CapabilitiesSection() {
         <div className="max-w-6xl mx-auto border-l border-r border-border">
           <SectionHeader>
             <h2 className="text-3xl md:text-4xl font-medium tracking-tighter text-center text-balance pb-1">
-              What Can Suna Do For You?
+              What Can Dimatic Do For You?
             </h2>
             <p className="text-muted-foreground text-center text-balance font-medium">
-              From content creation to data analysis, Suna handles the work that takes you hours in just minutes.
+              Dimatic handles the time-consuming tasks that keep you from doing the work that actually earns you money.
             </p>
           </SectionHeader>
 
