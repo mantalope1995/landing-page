@@ -1,75 +1,70 @@
 'use client';
 
-import { useState } from 'react';
 import { SectionHeader } from '@/components/home/section-header';
 import { FooterSection } from '@/components/home/sections/footer-section';
 import { motion } from 'motion/react';
-import { 
-  ArrowRight, 
-  Check, 
-  Clock, 
-  Shield, 
-  Users, 
-  Zap,
-  Star,
+import {
+  ArrowRight,
+  Check,
+  Shield,
+  MessageCircle,
+  Wrench,
   Calendar,
-  Headphones,
-  Settings,
-  TrendingUp,
-  Sparkles
+  Users,
+  Zap,
+  Lock
 } from 'lucide-react';
-import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { KortixEnterpriseModal } from '@/components/sidebar/kortix-enterprise-modal';
 import { KortixLogo } from '@/components/sidebar/kortix-logo';
 
 // Hero Section Component
-const CustomHeroSection = () => {
+const HeroSection = () => {
   return (
     <section className="w-full relative overflow-hidden">
       <div className="relative flex flex-col items-center w-full px-6">
         <div className="relative z-10 pt-32 mx-auto h-full w-full max-w-6xl flex flex-col items-center justify-center">
           <div className="flex flex-col items-center justify-center gap-6 pt-12 max-w-4xl mx-auto">
-            {/* Kortix Logo */}
+            {/* Logo */}
             <div className="mb-8">
               <KortixLogo size={48} />
             </div>
-            
+
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-primary/10 to-secondary/10 border border-primary/20">
-              <Sparkles className="w-4 h-4 text-primary" />
-              <span className="text-sm font-medium text-primary">Enterprise Implementation Services</span>
+              <Zap className="w-4 h-4 text-primary" />
+              <span className="text-sm font-medium text-primary">Solutions for Aussie Businesses</span>
             </div>
-            
+
             <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-medium tracking-tighter text-balance text-center">
-              <span className="text-primary">Enterprise AI Workers.</span>
+              Let AI handle the boring stuff
               <br />
-              <span className="text-secondary">Delivered in days.</span>
+              <span className="text-primary">so you can focus on what matters</span>
             </h1>
-            
+
             <p className="text-lg md:text-xl text-center text-muted-foreground font-medium text-balance leading-relaxed tracking-tight max-w-3xl">
-              Skip the learning curve. Our AI specialists design, develop and deploy enterprise-grade AI workers that integrate seamlessly with your operations.
+              We set up and manage smart tools that automate your business tasks. No tech skills needed.
             </p>
-            
+
             <div className="flex flex-col items-center gap-6 pt-6">
               <KortixEnterpriseModal>
                 <Button size="lg">
                   <Calendar className="w-4 h-4 mr-2" />
-                  Schedule Strategy Call
+                  Book a free 15-min chat
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
               </KortixEnterpriseModal>
               <div className="flex flex-col sm:flex-row items-center gap-4 text-sm text-muted-foreground">
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 rounded-full bg-primary"></div>
-                  <span>Free consultation</span>
+                  <span>No technical skills needed</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 rounded-full bg-primary"></div>
-                  <span>Custom solution design</span>
+                  <span>We handle the setup</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 rounded-full bg-primary"></div>
-                  <span>Tailored pricing</span>
+                  <span>Local Aussie support</span>
                 </div>
               </div>
             </div>
@@ -81,76 +76,44 @@ const CustomHeroSection = () => {
   );
 };
 
-// Value Proposition Section
-const ValuePropSection = () => {
-  return (
-    <section className="flex flex-col items-center justify-center w-full relative">
-      <div className="relative w-full px-6">
-        <div className="max-w-6xl mx-auto border-l border-r border-border">
-          <SectionHeader>
-            <h2 className="text-3xl md:text-4xl font-medium tracking-tighter text-center text-balance pb-1">
-              When Standard Solutions Fall Short
-            </h2>
-            <p className="text-muted-foreground text-center text-balance font-medium">
-              Professional implementation services designed for organizations with unique requirements and mission-critical automation needs.
-            </p>
-          </SectionHeader>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 border-t border-border">
-            <div className="p-8 border-r border-border">
-              <div className="space-y-6">
-                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                  <Clock className="w-6 h-6 text-primary" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-semibold mb-3">Accelerate Time-to-Value</h3>
-                  <p className="text-muted-foreground leading-relaxed">
-                    Bypass months of development cycles. Our proven methodology delivers enterprise-ready AI workers in a fraction of the time, letting you focus on strategy instead of implementation.
-                  </p>
-                </div>
-              </div>
-            </div>
-            
-            <div className="p-8">
-              <div className="space-y-6">
-                <div className="w-12 h-12 rounded-full bg-secondary/10 flex items-center justify-center">
-                  <Settings className="w-6 h-6 text-secondary" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-semibold mb-3">Enterprise Integration</h3>
-                  <p className="text-muted-foreground leading-relaxed">
-                    Designed for sophisticated business processes requiring seamless integration with legacy systems, compliance frameworks, and industry-specific requirements.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-};
-
-// Implementation Process Section
-const ProcessSection = () => {
-  const steps = [
+// Solutions Overview Section
+const SolutionsSection = () => {
+  const solutions = [
     {
-      icon: <Users className="w-8 h-8" />,
-      title: "Strategic Analysis",
-      description: "Solution architects conduct comprehensive business analysis, workflow mapping, and technical requirements gathering to design optimal AI worker architecture for your organization.",
-      phase: "Discovery"
+      icon: <Wrench className="w-6 h-6" />,
+      title: "Task Automation",
+      description: "Connect your apps and automate the boring stuff",
+      color: "primary",
+      features: [
+        "Automatically add new leads from your website into your CRM",
+        "Send follow-up emails when customers enquire",
+        "Post to social media across all platforms at once",
+        "Sync data between your tools automatically"
+      ]
     },
     {
-      icon: <Zap className="w-8 h-8" />,
-      title: "Engineering Excellence", 
-      description: "Full-stack development with enterprise security, scalability design, comprehensive testing, performance optimization, and seamless integration with existing systems.",
-      phase: "Build"
+      icon: <MessageCircle className="w-6 h-6" />,
+      title: "Smart Assistant",
+      description: "Your own AI that knows your business",
+      color: "secondary",
+      features: [
+        "Chat with your documents to find info instantly",
+        "Build a customer support bot that knows your products",
+        "Create an internal knowledge base for your team",
+        "Ask questions and get answers from your own files"
+      ]
     },
     {
-      icon: <Shield className="w-8 h-8" />,
-      title: "Enterprise Support",
-      description: "Dedicated success management, comprehensive training programs, continuous performance monitoring, optimization services, and satisfaction guarantee with full accountability.",
-      phase: "Scale"
+      icon: <Shield className="w-6 h-6" />,
+      title: "AI Agent HQ",
+      description: "Your AI assistants, kept private and secure",
+      color: "primary",
+      features: [
+        "Your data stays in Australia, in your own protected space",
+        "Everything is locked down and encrypted (like a secure vault)",
+        "Control which AI tools can access what in your business",
+        "See exactly what your AI agents are doing, anytime"
+      ]
     }
   ];
 
@@ -160,10 +123,86 @@ const ProcessSection = () => {
         <div className="max-w-6xl mx-auto border-l border-r border-border">
           <SectionHeader>
             <h2 className="text-3xl md:text-4xl font-medium tracking-tighter text-center text-balance pb-1">
-              Our Implementation Methodology
+              Three ways we can save you time
             </h2>
             <p className="text-muted-foreground text-center text-balance font-medium">
-              A proven three-phase approach that transforms your vision into production-ready AI workers
+              Practical tools that handle the repetitive stuff you'd rather not do
+            </p>
+          </SectionHeader>
+
+          <div className="border-t border-border">
+            {solutions.map((solution, index) => (
+              <motion.div
+                key={index}
+                className={`p-8 ${index !== solutions.length - 1 ? 'border-b border-border' : ''}`}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
+              >
+                <div className="flex flex-col md:flex-row gap-6">
+                  <div className="flex-shrink-0">
+                    <div className={`w-14 h-14 rounded-2xl bg-${solution.color}/10 flex items-center justify-center text-${solution.color} border border-${solution.color}/20`}>
+                      {solution.icon}
+                    </div>
+                  </div>
+                  <div className="flex-1 space-y-4">
+                    <div>
+                      <h3 className="text-2xl font-semibold mb-2">{solution.title}</h3>
+                      <p className="text-muted-foreground text-lg">{solution.description}</p>
+                    </div>
+                    <ul className="space-y-2">
+                      {solution.features.map((feature, idx) => (
+                        <li key={idx} className="flex items-start gap-2">
+                          <Check className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                          <span className="text-muted-foreground">{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// How It Works Section
+const ProcessSection = () => {
+  const steps = [
+    {
+      icon: <MessageCircle className="w-8 h-8" />,
+      title: "Have a Chat",
+      description: "We jump on a quick call to understand what's eating up your time. No technical talk - just a conversation about your business and what you wish was easier.",
+      phase: "Chat"
+    },
+    {
+      icon: <Wrench className="w-8 h-8" />,
+      title: "We Set It Up",
+      description: "Our team configures everything for you. We connect your tools, customise the automation, and test it all works. You just sit back while we do the work.",
+      phase: "Setup"
+    },
+    {
+      icon: <Zap className="w-8 h-8" />,
+      title: "You're Away",
+      description: "We show you the ropes, make sure you're comfortable, and stick around for support. If you need help or want to add more later, we're just a message away.",
+      phase: "Go"
+    }
+  ];
+
+  return (
+    <section className="flex flex-col items-center justify-center w-full relative">
+      <div className="relative w-full px-6">
+        <div className="max-w-6xl mx-auto border-l border-r border-border">
+          <SectionHeader>
+            <h2 className="text-3xl md:text-4xl font-medium tracking-tighter text-center text-balance pb-1">
+              How we get you sorted
+            </h2>
+            <p className="text-muted-foreground text-center text-balance font-medium">
+              Three simple steps - we handle the heavy lifting
             </p>
           </SectionHeader>
 
@@ -182,7 +221,7 @@ const ProcessSection = () => {
                     {step.icon}
                   </div>
                 </div>
-                
+
                 <div className="flex-1 space-y-3">
                   <div className="flex items-center gap-3">
                     <h3 className="text-xl font-semibold">{step.title}</h3>
@@ -206,12 +245,12 @@ const ProcessSection = () => {
 // Benefits Section
 const BenefitsSection = () => {
   const benefits = [
-    "Dedicated solution architect and technical lead for your project",
-    "Enterprise-grade AI worker design with scalability considerations",
-    "White-glove support with dedicated success manager", 
-    "Comprehensive team training and knowledge transfer",
-    "Quarterly business reviews and performance optimization",
-    "Deep integration with existing technology stack and workflows"
+    { title: "We speak your language", description: "No tech jargon, just clear explanations in plain English" },
+    { title: "Local Aussie support", description: "Real humans you can actually talk to, in your timezone" },
+    { title: "We handle the tech", description: "You focus on your business, we'll handle the setup" },
+    { title: "Fair and flexible", description: "Pricing that scales with you, no hidden nasties" },
+    { title: "Show you how it works", description: "We don't just disappear - we train your team properly" },
+    { title: "Keep improving", description: "Regular check-ins to make sure everything's running smoothly" }
   ];
 
   return (
@@ -220,10 +259,10 @@ const BenefitsSection = () => {
         <div className="max-w-6xl mx-auto border-l border-r border-border">
           <SectionHeader>
             <h2 className="text-3xl md:text-4xl font-medium tracking-tighter text-center text-balance pb-1">
-              Enterprise-Grade Implementation
+              Why businesses work with us
             </h2>
             <p className="text-muted-foreground text-center text-balance font-medium">
-              Premium service tier with dedicated resources and tailored solutions for complex organizational needs
+              We're here to make your life easier, not more complicated
             </p>
           </SectionHeader>
 
@@ -241,147 +280,12 @@ const BenefitsSection = () => {
                   <div className="flex-shrink-0 w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center mt-0.5">
                     <Check className="w-3 h-3 text-primary" />
                   </div>
-                  <p className="text-sm font-medium leading-relaxed">{benefit}</p>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-};
-
-// Testimonials Section
-const TestimonialsSection = () => {
-  const testimonials = [
-    {
-      quote: "The implementation team transformed our entire workflow. Their expertise in enterprise AI deployment is unmatched.",
-      author: "Sarah Chen",
-      company: "TechFlow Industries",
-      avatar: "🚀"
-    },
-    {
-      quote: "ROI was evident within the first month. The AI workers handle our most complex processes flawlessly.",
-      author: "Marcus Rodriguez", 
-      company: "Global Manufacturing Corp",
-      avatar: "💡"
-    },
-    {
-      quote: "Outstanding technical depth and business understanding. They delivered exactly what we envisioned.",
-      author: "Dr. Amanda Foster",
-      company: "Research Dynamics LLC",
-      avatar: "⭐"
-    },
-    {
-      quote: "Professional, reliable, and innovative. The custom solution exceeded our expectations completely.",
-      author: "James Wellington",
-      company: "Strategic Ventures Group", 
-      avatar: "🎯"
-    }
-  ];
-
-  return (
-    <section className="flex flex-col items-center justify-center w-full relative">
-      <div className="relative w-full px-6">
-        <div className="max-w-6xl mx-auto border-l border-r border-border">
-          <SectionHeader>
-            <h2 className="text-3xl md:text-4xl font-medium tracking-tighter text-center text-balance pb-1">
-              Client Success Stories
-            </h2>
-            <p className="text-muted-foreground text-center text-balance font-medium">
-              Organizations that have transformed their operations with our enterprise implementation services
-            </p>
-          </SectionHeader>
-
-          <div className="border-t border-border">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-0">
-              {testimonials.map((testimonial, index) => (
-                <motion.div
-                  key={index}
-                  className={`p-8 ${index % 2 === 0 ? 'md:border-r border-border' : ''} ${index < 2 ? 'border-b border-border' : ''}`}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                >
-                  <div className="space-y-4">
-                    <div className="flex items-center gap-1">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="w-4 h-4 fill-primary text-primary" />
-                      ))}
-                    </div>
-                    
-                    <blockquote className="text-lg font-medium leading-relaxed">
-                      "{testimonial.quote}"
-                    </blockquote>
-                    
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-accent flex items-center justify-center text-lg">
-                        {testimonial.avatar}
-                      </div>
-                      <div>
-                        <p className="font-semibold">{testimonial.author}</p>
-                        <p className="text-sm text-muted-foreground">{testimonial.company}</p>
-                      </div>
-                    </div>
+                  <div>
+                    <p className="text-sm font-semibold leading-relaxed mb-1">{benefit.title}</p>
+                    <p className="text-xs text-muted-foreground leading-relaxed">{benefit.description}</p>
                   </div>
                 </motion.div>
               ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-};
-
-// Self-Service Alternative Section
-const SelfServiceSection = () => {
-  return (
-    <section className="flex flex-col items-center justify-center w-full relative">
-      <div className="relative w-full px-6">
-        <div className="max-w-6xl mx-auto border-l border-r border-border">
-          <SectionHeader>
-            <h2 className="text-3xl md:text-4xl font-medium tracking-tighter text-center text-balance pb-1">
-              Self-Service Alternative
-            </h2>
-            <p className="text-muted-foreground text-center text-balance font-medium">
-              Explore our platform independently with comprehensive resources and community support
-            </p>
-          </SectionHeader>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 border-t border-border">
-            <div className="p-8 border-r border-border space-y-6">
-              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                <TrendingUp className="w-6 h-6 text-primary" />
-              </div>
-              <div>
-                <h3 className="text-xl font-semibold mb-3">Learning Center</h3>
-                <p className="text-muted-foreground leading-relaxed mb-4">
-                  Master AI worker development through structured courses, detailed documentation, and hands-on tutorials.
-                </p>
-                <Button variant="outline" className="rounded-full">
-                  Start Learning
-                  <ArrowRight className="w-4 h-4 ml-2" />
-                </Button>
-              </div>
-            </div>
-            
-            <div className="p-8 space-y-6">
-              <div className="w-12 h-12 rounded-full bg-secondary/10 flex items-center justify-center">
-                <Headphones className="w-6 h-6 text-secondary" />
-              </div>
-              <div>
-                <h3 className="text-xl font-semibold mb-3">Developer Community</h3>
-                <p className="text-muted-foreground leading-relaxed mb-4">
-                  Connect with engineers, solution architects, and other professionals building enterprise AI solutions.
-                </p>
-                <Button variant="outline" className="rounded-full">
-                  Join Community
-                  <ArrowRight className="w-4 h-4 ml-2" />
-                </Button>
-              </div>
             </div>
           </div>
         </div>
@@ -398,10 +302,10 @@ const FinalCTASection = () => {
         <div className="max-w-6xl mx-auto border-l border-r border-border">
           <SectionHeader>
             <h2 className="text-3xl md:text-4xl font-medium tracking-tighter text-center text-balance pb-1">
-              Ready to Transform Your Operations?
+              Ready to free up some time?
             </h2>
             <p className="text-muted-foreground text-center text-balance font-medium">
-              Let's discuss your specific requirements and design a custom AI implementation strategy for your organization.
+              Let's have a no-pressure chat about what might work for your business
             </p>
           </SectionHeader>
 
@@ -412,27 +316,30 @@ const FinalCTASection = () => {
                   <KortixEnterpriseModal>
                     <Button size="lg">
                       <Calendar className="w-4 h-4 mr-2" />
-                      Book Your Strategy Session
+                      Book a free 15-min chat
                       <ArrowRight className="w-4 h-4 ml-2" />
                     </Button>
                   </KortixEnterpriseModal>
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center max-w-2xl mx-auto">
                     <div className="flex flex-col items-center gap-2 p-4 rounded-lg bg-accent/20">
-                      <Shield className="w-6 h-6 text-primary" />
-                      <span className="text-sm font-medium">100% Satisfaction</span>
-                      <span className="text-xs text-muted-foreground">Guarantee</span>
+                      <MessageCircle className="w-6 h-6 text-primary" />
+                      <span className="text-sm font-medium">No obligation</span>
+                      <span className="text-xs text-muted-foreground">Just a conversation, no hard sell</span>
                     </div>
                     <div className="flex flex-col items-center gap-2 p-4 rounded-lg bg-accent/20">
                       <Users className="w-6 h-6 text-primary" />
-                      <span className="text-sm font-medium">Enterprise Support</span>
-                      <span className="text-xs text-muted-foreground">Dedicated team</span>
+                      <span className="text-sm font-medium">Local team</span>
+                      <span className="text-xs text-muted-foreground">Based in Australia, here to help</span>
                     </div>
                     <div className="flex flex-col items-center gap-2 p-4 rounded-lg bg-accent/20">
-                      <Settings className="w-6 h-6 text-primary" />
-                      <span className="text-sm font-medium">Custom Pricing</span>
-                      <span className="text-xs text-muted-foreground">Tailored to needs</span>
+                      <Lock className="w-6 h-6 text-primary" />
+                      <span className="text-sm font-medium">Simple pricing</span>
+                      <span className="text-xs text-muted-foreground">Clear and upfront, no surprises</span>
                     </div>
                   </div>
+                  <p className="text-sm text-muted-foreground pt-4">
+                    Even if you're not sure what you need yet, that's totally fine. We're happy to just chat through what's possible.
+                  </p>
                 </div>
               </div>
             </div>
@@ -444,16 +351,14 @@ const FinalCTASection = () => {
 };
 
 // Main Page Component
-export default function CustomImplementationPage() {
+export default function EnterprisePage() {
   return (
     <main className="flex flex-col items-center justify-center min-h-screen w-full">
       <div className="w-full divide-y divide-border">
-        <CustomHeroSection />
-        <ValuePropSection />
+        <HeroSection />
+        <SolutionsSection />
         <ProcessSection />
         <BenefitsSection />
-        {/* <TestimonialsSection /> */}
-        {/* <SelfServiceSection /> */}
         <FinalCTASection />
         <FooterSection />
       </div>
