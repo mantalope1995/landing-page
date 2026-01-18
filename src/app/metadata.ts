@@ -4,7 +4,7 @@ import { siteConfig } from '@/lib/site';
 export const metadata: Metadata = {
   title: siteConfig.name,
   description: siteConfig.description,
-  keywords: ['Dimatic Suna', 'Dimatic', 'Suna', 'AI', 'Agent'],
+  keywords: ['Dimatic', 'AI', 'Agent'],
   authors: [
     {
       name: 'Dimatic',
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   creator: 'Dimatic',
   openGraph: {
     type: 'website',
-    locale: 'en_AUS',
+    locale: 'en_AU',
     url: siteConfig.url,
     title: siteConfig.name,
     description: siteConfig.description,

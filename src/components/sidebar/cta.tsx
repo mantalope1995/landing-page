@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { KortixProcessModal } from '@/components/sidebar/kortix-enterprise-modal';
+import { DimaticProcessModal } from '@/components/sidebar/dimatic-enterprise-modal';
 
 export function CTACard() {
   return (
@@ -10,16 +10,16 @@ export function CTACard() {
             Enterprise Demo
           </span>
           <span className="text-xs text-muted-foreground mt-0.5">
-          Request custom AI Agents implementation
+            Request custom AI Agents implementation
           </span>
         </div>
 
         <div>
-          <KortixProcessModal>
+          <DimaticProcessModal>
             <Button className="w-full">
               Learn more
             </Button>
-          </KortixProcessModal>
+          </DimaticProcessModal>
         </div>
 
       </div>

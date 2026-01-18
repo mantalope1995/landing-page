@@ -13,8 +13,8 @@ import type { MarketplaceTemplate } from '@/components/agents/installation/types
 interface MarketplaceTabProps {
   marketplaceSearchQuery: string;
   setMarketplaceSearchQuery: (value: string) => void;
-  marketplaceFilter: 'all' | 'kortix' | 'community' | 'mine';
-  setMarketplaceFilter: (value: 'all' | 'kortix' | 'community' | 'mine') => void;
+  marketplaceFilter: 'all' | 'dimatic' | 'community' | 'mine';
+  setMarketplaceFilter: (value: 'all' | 'dimatic' | 'community' | 'mine') => void;
   marketplaceLoading: boolean;
   allMarketplaceItems: MarketplaceTemplate[];
   mineItems: MarketplaceTemplate[];
@@ -24,7 +24,7 @@ interface MarketplaceTabProps {
   getItemStyling: (item: MarketplaceTemplate) => { avatar: string; color: string };
   currentUserId?: string;
   onAgentPreview?: (agent: MarketplaceTemplate) => void;
-  
+
   marketplacePage: number;
   setMarketplacePage: (page: number) => void;
   marketplacePageSize: number;
@@ -74,14 +74,14 @@ export const MarketplaceTab = ({
           onChange={setMarketplaceSearchQuery}
         />
         <div className="flex items-center gap-3">
-          <Select value={marketplaceFilter} onValueChange={(value: 'all' | 'kortix' | 'community' | 'mine') => setMarketplaceFilter(value)}>
+          <Select value={marketplaceFilter} onValueChange={(value: 'all' | 'dimatic' | 'community' | 'mine') => setMarketplaceFilter(value)}>
             <SelectTrigger className="w-[180px] h-12 rounded-xl">
               <SelectValue placeholder="Filter agents" />
             </SelectTrigger>
             <SelectContent className='rounded-xl'>
               <SelectItem className='rounded-xl' value="all">All Agents</SelectItem>
               <SelectItem className='rounded-xl' value="mine">Mine</SelectItem>
-              <SelectItem className='rounded-xl' value="kortix">Kortix Verified</SelectItem>
+              <SelectItem className='rounded-xl' value="dimatic">Dimatic Verified</SelectItem>
               <SelectItem className='rounded-xl' value="community">Community</SelectItem>
             </SelectContent>
           </Select>
@@ -108,7 +108,7 @@ export const MarketplaceTab = ({
         ) : allMarketplaceItems.length === 0 ? (
           <div className="text-center py-12">
             <p className="text-muted-foreground">
-              {marketplaceSearchQuery 
+              {marketplaceSearchQuery
                 ? "No templates found matching your criteria. Try adjusting your search or filters."
                 : "No agent templates are currently available in the marketplace."}
             </p>

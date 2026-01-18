@@ -10,7 +10,7 @@ import { useState, useEffect } from 'react';
 import { useTrialStatus, useStartTrial } from '@/hooks/react-query/billing/use-trial-status';
 import { useSubscription } from '@/hooks/react-query/use-billing-v2';
 import { Skeleton } from '@/components/ui/skeleton';
-import { KortixLogo } from '@/components/sidebar/kortix-logo';
+import { DimaticLogo } from '@/components/sidebar/dimatic-logo';
 import Link from 'next/link';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { createClient } from '@/lib/supabase/client';
@@ -30,14 +30,14 @@ export default function ActivateTrialPage() {
   useEffect(() => {
     if (!isLoadingSubscription && !isLoadingTrial && subscription && trialStatus) {
       const hasActiveTrial = trialStatus.has_trial && trialStatus.trial_status === 'active';
-      const hasUsedTrial = trialStatus.trial_status === 'used' || 
-                           trialStatus.trial_status === 'expired' || 
-                           trialStatus.trial_status === 'cancelled' ||
-                           trialStatus.trial_status === 'converted';
-      const hasActiveSubscription = subscription.tier && 
-                                   subscription.tier.name !== 'none' && 
-                                   subscription.tier.name !== 'free';
-      
+      const hasUsedTrial = trialStatus.trial_status === 'used' ||
+        trialStatus.trial_status === 'expired' ||
+        trialStatus.trial_status === 'cancelled' ||
+        trialStatus.trial_status === 'converted';
+      const hasActiveSubscription = subscription.tier &&
+        subscription.tier.name !== 'none' &&
+        subscription.tier.name !== 'free';
+
       if (hasActiveTrial || hasActiveSubscription) {
         router.push('/dashboard');
       } else if (hasUsedTrial) {
@@ -52,7 +52,7 @@ export default function ActivateTrialPage() {
         success_url: `${window.location.origin}/dashboard?trial=started`,
         cancel_url: `${window.location.origin}/activate-trial`,
       });
-      
+
       if (result.checkout_url) {
         window.location.href = result.checkout_url;
       }
@@ -80,7 +80,7 @@ export default function ActivateTrialPage() {
   }
 
   if (maintenanceNotice?.enabled) {
-    return <MaintenanceAlert open={true} onOpenChange={() => {}} closeable={false} />;
+    return <MaintenanceAlert open={true} onOpenChange={() => { }} closeable={false} />;
   }
 
   const isLoading = isLoadingSubscription || isLoadingTrial;
@@ -110,8 +110,8 @@ export default function ActivateTrialPage() {
         <CardHeader className="text-center space-y-4">
           <div>
             <CardTitle className="text-2xl font-bold flex items-center justify-center gap-2">
-              <KortixLogo/>
-              <span>Welcome to Suna</span>
+              <DimaticLogo />
+              <span>Welcome to Dimatic</span>
             </CardTitle>
             <CardDescription className="mt-2">
               Start your journey with a 7-day free trial
@@ -125,7 +125,7 @@ export default function ActivateTrialPage() {
               <Zap className="h-5 w-5 text-primary" />
               What's included in trial:
             </h3>
-            
+
             <div className="grid md:grid-cols-2 gap-4">
               <div className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
@@ -149,7 +149,7 @@ export default function ActivateTrialPage() {
               <div className="space-y-1">
                 <p className="font-medium">No charge during trial</p>
                 <p className="text-sm text-muted-foreground">
-                  Your card will only be charged after 7 days if you don't cancel. 
+                  Your card will only be charged after 7 days if you don't cancel.
                   You can cancel anytime from your billing settings.
                 </p>
               </div>
@@ -157,7 +157,7 @@ export default function ActivateTrialPage() {
           </div>
 
           <div className="flex flex-col gap-3">
-            <Button 
+            <Button
               onClick={handleStartTrial}
               disabled={startTrialMutation.isPending}
               className="w-full"

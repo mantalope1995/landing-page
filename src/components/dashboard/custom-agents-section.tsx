@@ -5,7 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { Ripple } from '../ui/ripple';
-import { useKortixTeamTemplates, useInstallTemplate } from '@/hooks/react-query/secure-mcp/use-secure-mcp';
+import { useDimaticTeamTemplates, useInstallTemplate } from '@/hooks/react-query/secure-mcp/use-secure-mcp';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useRouter } from 'next/navigation';
 import { MarketplaceAgentPreviewDialog } from '@/components/agents/marketplace-agent-preview-dialog';
@@ -33,9 +33,9 @@ const TitleSection = () => (
 
 export function CustomAgentsSection({ onAgentSelect }: CustomAgentsSectionProps) {
   const router = useRouter();
-  const { data: templates, isLoading, error } = useKortixTeamTemplates();
+  const { data: templates, isLoading, error } = useDimaticTeamTemplates();
   const installTemplate = useInstallTemplate();
-  
+
   const [selectedTemplate, setSelectedTemplate] = React.useState<MarketplaceTemplate | null>(null);
   const [isPreviewOpen, setIsPreviewOpen] = React.useState(false);
   const [showInstallDialog, setShowInstallDialog] = React.useState(false);
@@ -52,7 +52,7 @@ export function CustomAgentsSection({ onAgentSelect }: CustomAgentsSectionProps)
       description: template.description,
       tags: template.tags || [],
       download_count: template.download_count || 0,
-      is_kortix_team: template.is_kortix_team || false,
+      is_dimatic_team: template.is_dimatic_team || false,
       creator_name: template.creator_name,
       created_at: template.created_at,
       profile_image_url: template.profile_image_url,
@@ -66,7 +66,7 @@ export function CustomAgentsSection({ onAgentSelect }: CustomAgentsSectionProps)
       model: template.metadata?.model,
       marketplace_published_at: template.marketplace_published_at,
     };
-    
+
     setSelectedTemplate(marketplaceTemplate);
     setIsPreviewOpen(true);
   };
@@ -79,9 +79,9 @@ export function CustomAgentsSection({ onAgentSelect }: CustomAgentsSectionProps)
 
   // Handle the actual installation from the streamlined dialog
   const handleInstall = async (
-    item: MarketplaceTemplate, 
-    instanceName: string, 
-    profileMappings: Record<string, string>, 
+    item: MarketplaceTemplate,
+    instanceName: string,
+    profileMappings: Record<string, string>,
     customServerConfigs: Record<string, any>
   ) => {
     if (!item) return;
@@ -196,7 +196,7 @@ export function CustomAgentsSection({ onAgentSelect }: CustomAgentsSectionProps)
               onClick={() => handleCardClick(template)}
             >
               <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-              
+
               <div className="h-full relative flex flex-col overflow-hidden w-full p-4">
                 <div className="flex items-center gap-3 mb-3">
                   <div className="flex-shrink-0">

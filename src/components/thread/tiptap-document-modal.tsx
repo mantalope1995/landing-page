@@ -15,7 +15,7 @@ import { createClient } from '@/lib/supabase/client';
 import { Editor } from '@/components/agents/docs-agent/editor';
 import { AdvancedToolbar } from '@/components/agents/docs-agent/advanced-toolbar';
 import { exportDocument, type ExportFormat } from '@/lib/utils/document-export';
-import { KortixLogo } from '../sidebar/kortix-logo';
+import { DimaticLogo } from '../sidebar/dimatic-logo';
 import { useDocumentModalStore } from '@/lib/stores/use-document-modal-store';
 
 interface TipTapDocumentModalProps {
@@ -47,7 +47,7 @@ export function TipTapDocumentModal({
   const [wordCount, setWordCount] = useState(0);
   const [characterCount, setCharacterCount] = useState(0);
   const fileName = documentData.title || filePath.split('/').pop()?.replace('.json', '') || 'document';
-  
+
   const { setIsOpen } = useDocumentModalStore();
 
   const documentId = `${sandboxId}-${filePath.replace(/\//g, '-')}`;
@@ -83,7 +83,7 @@ export function TipTapDocumentModal({
     try {
       const supabase = createClient();
       const { data: { session } } = await supabase.auth.getSession();
-      
+
       if (!session?.access_token) {
         throw new Error('No access token available');
       }
@@ -179,22 +179,22 @@ export function TipTapDocumentModal({
         <DialogHeader className="px-4 py-3 border-b">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <KortixLogo size={24} />
+              <DimaticLogo size={24} />
               <DialogTitle>{fileName}</DialogTitle>
               <SaveStateIndicator />
             </div>
           </div>
         </DialogHeader>
-        
+
         {editorInstance && (
-          <AdvancedToolbar 
+          <AdvancedToolbar
             editor={editorInstance}
             onExport={handleExport}
             wordCount={wordCount}
             characterCount={characterCount}
           />
         )}
-        
+
         <div className="flex-1 -mt-4 overflow-auto bg-background">
           <Editor
             content={documentData.content || '<p></p>'}

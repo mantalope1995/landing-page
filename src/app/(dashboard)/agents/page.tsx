@@ -50,7 +50,7 @@ export default function AgentsPage() {
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
   const searchParams = useSearchParams();
   const pathname = usePathname();
-  
+
   const [agentsPage, setAgentsPage] = useState(1);
   const [agentsPageSize, setAgentsPageSize] = useState(20);
   const [agentsSearchQuery, setAgentsSearchQuery] = useState('');
@@ -72,8 +72,8 @@ export default function AgentsPage() {
   const [selectedItem, setSelectedItem] = useState<MarketplaceTemplate | null>(null);
   const [showInstallDialog, setShowInstallDialog] = useState(false);
   const [showPreviewDialog, setShowPreviewDialog] = useState(false);
-  const [marketplaceFilter, setMarketplaceFilter] = useState<'all' | 'kortix' | 'community' | 'mine'>('all');
-  
+  const [marketplaceFilter, setMarketplaceFilter] = useState<'all' | 'dimatic' | 'community' | 'mine'>('all');
+
   const [templatesPage, setTemplatesPage] = useState(1);
   const [templatesPageSize, setTemplatesPageSize] = useState(20);
   const [templatesSearchQuery, setTemplatesSearchQuery] = useState('');
@@ -127,15 +127,15 @@ export default function AgentsPage() {
       sort_by: "download_count",
       sort_order: "desc"
     };
-    
-    if (marketplaceFilter === 'kortix') {
-      params.is_kortix_team = true;
+
+    if (marketplaceFilter === 'dimatic') {
+      params.is_dimatic_team = true;
     } else if (marketplaceFilter === 'community') {
-      params.is_kortix_team = false;
+      params.is_dimatic_team = false;
     } else if (marketplaceFilter === 'mine') {
       params.mine = true;
     }
-    
+
     return params;
   }, [marketplacePage, marketplacePageSize, marketplaceSearchQuery, marketplaceSelectedTags, marketplaceFilter]);
 
@@ -159,11 +159,11 @@ export default function AgentsPage() {
     sort_order: templatesSortOrder,
     content_type: "templates"
   }), [templatesPage, templatesPageSize, templatesSearchQuery, templatesSortBy, templatesSortOrder]);
-  
+
   const { data: templatesResponse, isLoading: templatesLoading, error: templatesError } = useAgents(templatesAgentsQueryParams);
   const myTemplates = templatesResponse?.agents;
   const templatesPagination = templatesResponse?.pagination;
-  
+
   const updateAgentMutation = useUpdateAgent();
   const { optimisticallyUpdateAgent, revertOptimisticUpdate } = useOptimisticAgentUpdate();
   const { deleteAgent, isDeletingAgent, isDeleting } = useAgentDeletionState();
@@ -197,7 +197,7 @@ export default function AgentsPage() {
           icon_color: template.icon_color,
           icon_background: template.icon_background,
           template_id: template.template_id,
-          is_kortix_team: template.is_kortix_team,
+          is_dimatic_team: template.is_dimatic_team,
           mcp_requirements: template.mcp_requirements,
           metadata: template.metadata,
         };
@@ -291,7 +291,7 @@ export default function AgentsPage() {
   const handlePreviewClose = () => {
     setShowPreviewDialog(false);
     setSelectedItem(null);
-    
+
     const currentUrl = new URL(window.location.href);
     if (currentUrl.searchParams.has('agent')) {
       currentUrl.searchParams.delete('agent');
@@ -308,7 +308,7 @@ export default function AgentsPage() {
   const handleAgentPreview = (agent: MarketplaceTemplate) => {
     setSelectedItem(agent);
     setShowPreviewDialog(true);
-    
+
     // Update URL with agent parameter for sharing
     const currentUrl = new URL(window.location.href);
     currentUrl.searchParams.set('agent', agent.id);
@@ -317,20 +317,20 @@ export default function AgentsPage() {
   };
 
   const handleInstall = async (
-    item: MarketplaceTemplate, 
-    instanceName?: string, 
-    profileMappings?: Record<string, string>, 
+    item: MarketplaceTemplate,
+    instanceName?: string,
+    profileMappings?: Record<string, string>,
     customMcpConfigs?: Record<string, Record<string, any>>
   ) => {
     setInstallingItemId(item.id);
-    
+
     try {
       if (!instanceName || instanceName.trim() === '') {
         toast.error('Please provide a name for the agent');
         return;
       }
 
-      const regularRequirements = item.mcp_requirements?.filter(req => 
+      const regularRequirements = item.mcp_requirements?.filter(req =>
         !req.custom_type
       ) || [];
       const missingProfiles = regularRequirements.filter(req => {
@@ -339,21 +339,21 @@ export default function AgentsPage() {
           : req.qualified_name;
         return !profileMappings || !profileMappings[profileKey] || profileMappings[profileKey].trim() === '';
       });
-      
+
       if (missingProfiles.length > 0) {
         const missingNames = missingProfiles.map(req => req.display_name).join(', ');
         toast.error(`Please select credential profiles for: ${missingNames}`);
         return;
       }
 
-      const customRequirements = item.mcp_requirements?.filter(req => 
+      const customRequirements = item.mcp_requirements?.filter(req =>
         req.custom_type
       ) || [];
-      const missingCustomConfigs = customRequirements.filter(req => 
-        !customMcpConfigs || !customMcpConfigs[req.qualified_name] || 
+      const missingCustomConfigs = customRequirements.filter(req =>
+        !customMcpConfigs || !customMcpConfigs[req.qualified_name] ||
         req.required_config.some(field => !customMcpConfigs[req.qualified_name][field]?.trim())
       );
-      
+
       if (missingCustomConfigs.length > 0) {
         const missingNames = missingCustomConfigs.map(req => req.display_name).join(', ');
         toast.error(`Please provide all required configuration for: ${missingNames}`);
@@ -387,12 +387,12 @@ export default function AgentsPage() {
               trigger_index: cred.trigger_index
             }))
           ];
-          
+
           setSelectedItem({
             ...item,
             mcp_requirements: updatedRequirements
           });
-          
+
           toast.warning('Additional configurations required. Please complete the setup.');
           return;
         } else {
@@ -503,26 +503,26 @@ export default function AgentsPage() {
 
     try {
       const isAgent = publishDialog.templateId.length > 20;
-      
+
       if (isAgent) {
         setPublishingAgentId(publishDialog.templateId);
-        
+
         const result = await createTemplateMutation.mutateAsync({
           agent_id: publishDialog.templateId,
           make_public: true
         });
-        
+
         toast.success(`${publishDialog.templateName} has been published to the marketplace`);
       } else {
         setTemplatesActioningId(publishDialog.templateId);
-        
+
         await publishMutation.mutateAsync({
           template_id: publishDialog.templateId
         });
-        
+
         toast.success(`${publishDialog.templateName} has been published to the marketplace`);
       }
-      
+
       setPublishDialog(null);
     } catch (error: any) {
       toast.error(error.message || 'Failed to publish template');
@@ -632,8 +632,8 @@ export default function AgentsPage() {
           isInstalling={installingItemId === selectedItem?.id}
         />
 
-        <NewAgentDialog 
-          open={showNewAgentDialog} 
+        <NewAgentDialog
+          open={showNewAgentDialog}
           onOpenChange={setShowNewAgentDialog}
         />
 

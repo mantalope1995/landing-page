@@ -11,7 +11,7 @@ import {
     getUserFriendlyToolName,
     safeJsonParse,
 } from '@/components/thread/utils';
-import { KortixLogo } from '@/components/sidebar/kortix-logo';
+import { DimaticLogo } from '@/components/sidebar/dimatic-logo';
 import { AgentLoader } from './loader';
 import { AgentAvatar, AgentName } from './agent-avatar';
 import { parseXmlToolCalls, isNewXmlFormat } from '@/components/thread/tool-views/xml-parser';
@@ -52,21 +52,21 @@ export function renderAttachments(attachments: string[], fileViewerHandler?: (fi
 
 // Render Markdown content while preserving XML tags that should be displayed as tool calls
 function preprocessTextOnlyTools(content: string): string {
-    
+
     // Handle new function calls format for text-only tools - extract text parameter content
     // Complete XML format
     content = content.replace(/<function_calls>\s*<invoke name="ask">\s*<parameter name="text">([\s\S]*?)<\/parameter>[\s\S]*?<\/invoke>\s*<\/function_calls>/gi, '$1');
     content = content.replace(/<function_calls>\s*<invoke name="complete">\s*<parameter name="text">([\s\S]*?)<\/parameter>[\s\S]*?<\/invoke>\s*<\/function_calls>/gi, '$1');
     content = content.replace(/<function_calls>\s*<invoke name="present_presentation">[\s\S]*?<parameter name="text">([\s\S]*?)<\/parameter>[\s\S]*?<\/invoke>\s*<\/function_calls>/gi, '$1');
-    
+
     // Handle streaming/partial XML for message tools - extract text parameter content even if incomplete
     content = content.replace(/<function_calls>\s*<invoke name="ask">\s*<parameter name="text">([\s\S]*?)$/gi, '$1');
     content = content.replace(/<function_calls>\s*<invoke name="complete">\s*<parameter name="text">([\s\S]*?)$/gi, '$1');
     content = content.replace(/<function_calls>\s*<invoke name="present_presentation">[\s\S]*?<parameter name="text">([\s\S]*?)$/gi, '$1');
-    
+
     // Also handle old format for backward compatibility
     content = content.replace(/<ask[^>]*>([\s\S]*?)<\/ask>/gi, '$1');
-    content = content.replace(/<complete[^>]*>([\s\S]*?)<\/complete>/gi, '$1');  
+    content = content.replace(/<complete[^>]*>([\s\S]*?)<\/complete>/gi, '$1');
     content = content.replace(/<present_presentation[^>]*>([\s\S]*?)<\/present_presentation>/gi, '$1');
     return content;
 }
@@ -82,7 +82,7 @@ export function renderMarkdownContent(
 ) {
     // Preprocess content to convert text-only tools to natural text
     content = preprocessTextOnlyTools(content);
-    
+
     // If in debug mode, just display raw content in a pre tag
     if (debugMode) {
         return (
@@ -133,7 +133,7 @@ export function renderMarkdownContent(
                             {renderAttachments(attachmentArray, fileViewerHandler, sandboxId, project)}
                         </div>
                     );
-                    
+
                     // Also render standalone attachments outside the message
                     const standaloneAttachments = renderStandaloneAttachments(attachmentArray, fileViewerHandler, sandboxId, project);
                     if (standaloneAttachments) {
@@ -159,7 +159,7 @@ export function renderMarkdownContent(
                             {renderAttachments(attachmentArray, fileViewerHandler, sandboxId, project)}
                         </div>
                     );
-                    
+
                     // Also render standalone attachments outside the message
                     const standaloneAttachments = renderStandaloneAttachments(attachmentArray, fileViewerHandler, sandboxId, project);
                     if (standaloneAttachments) {
@@ -262,7 +262,7 @@ export function renderMarkdownContent(
                     {renderAttachments(attachments, fileViewerHandler, sandboxId, project)}
                 </div>
             );
-            
+
             // Also render standalone attachments outside the message
             const standaloneAttachments = renderStandaloneAttachments(attachments, fileViewerHandler, sandboxId, project);
             if (standaloneAttachments) {
@@ -290,7 +290,7 @@ export function renderMarkdownContent(
                     {renderAttachments(attachments, fileViewerHandler, sandboxId, project)}
                 </div>
             );
-            
+
             // Also render standalone attachments outside the message
             const standaloneAttachments = renderStandaloneAttachments(attachments, fileViewerHandler, sandboxId, project);
             if (standaloneAttachments) {
@@ -379,8 +379,8 @@ export const ThreadContent: React.FC<ThreadContentProps> = ({
     project,
     debugMode = false,
     isPreviewMode = false,
-    agentName = 'Suna',
-    agentAvatar = <KortixLogo size={16} />,
+    agentName = 'Dimatic',
+    agentAvatar = <DimaticLogo size={16} />,
     emptyStateComponent,
     threadMetadata,
     scrollContainerRef,
@@ -406,15 +406,15 @@ export const ThreadContent: React.FC<ThreadContentProps> = ({
     // Helper function to get agent info robustly
     const getAgentInfo = useCallback(() => {
 
-        // Check if this is a Suna default agent from metadata
-        const isSunaDefaultAgent = agentMetadata?.is_suna_default || false;
+        // Check if this is a Dimatic default agent from metadata
+        const isDimaticDefaultAgent = agentMetadata?.is_dimatic_default || false;
 
         // Then check recent messages for agent info
         const recentAssistantWithAgent = [...displayMessages].reverse().find(msg =>
             msg.type === 'assistant' && msg.agents?.name
         );
 
-        if (agentData && !isSunaDefaultAgent) {
+        if (agentData && !isDimaticDefaultAgent) {
             const profileUrl = agentData.profile_image_url;
             const avatar = profileUrl ? (
                 <img src={profileUrl} alt={agentData.name || agentName} className="h-5 w-5 rounded object-cover" />
@@ -424,7 +424,7 @@ export const ThreadContent: React.FC<ThreadContentProps> = ({
                 </div>
             ) : (
                 <div className="h-5 w-5 flex items-center justify-center rounded text-xs">
-                    <KortixLogo size={16} />
+                    <DimaticLogo size={16} />
                 </div>
             );
             return {
@@ -434,16 +434,16 @@ export const ThreadContent: React.FC<ThreadContentProps> = ({
         }
 
         if (recentAssistantWithAgent?.agents?.name) {
-            const isSunaAgent = recentAssistantWithAgent.agents.name === 'Suna' || isSunaDefaultAgent;
+            const isDimaticAgent = recentAssistantWithAgent.agents.name === 'Dimatic' || isDimaticDefaultAgent;
             // Prefer profile image if available on the agent payload
             const profileUrl = (recentAssistantWithAgent as any)?.agents?.profile_image_url;
-            const avatar = profileUrl && !isSunaDefaultAgent ? (
+            const avatar = profileUrl && !isDimaticDefaultAgent ? (
                 <img src={profileUrl} alt={recentAssistantWithAgent.agents.name} className="h-5 w-5 rounded object-cover" />
-            ) : !isSunaDefaultAgent ? (
+            ) : !isDimaticDefaultAgent ? (
                 <>
-                    {isSunaAgent ? (
+                    {isDimaticAgent ? (
                         <div className="h-5 w-5 flex items-center justify-center rounded text-xs">
-                            <KortixLogo size={16} />
+                            <DimaticLogo size={16} />
                         </div>
                     ) : (
                         <div className="h-5 w-5 flex items-center justify-center rounded text-xs">
@@ -453,7 +453,7 @@ export const ThreadContent: React.FC<ThreadContentProps> = ({
                 </>
             ) : (
                 <div className="h-5 w-5 flex items-center justify-center rounded text-xs">
-                    <KortixLogo size={16} />
+                    <DimaticLogo size={16} />
                 </div>
             );
             return {
@@ -463,19 +463,19 @@ export const ThreadContent: React.FC<ThreadContentProps> = ({
         }
 
         // Fallback: if this is a Suna default agent, always show KortixLogo
-        if (isSunaDefaultAgent) {
+        if (isDimaticDefaultAgent) {
             return {
-                name: agentName || 'Suna',
+                name: agentName || 'Dimatic',
                 avatar: (
                     <div className="h-5 w-5 flex items-center justify-center rounded text-xs">
-                        <KortixLogo size={16} />
+                        <DimaticLogo size={16} />
                     </div>
                 )
             };
         }
 
         return {
-            name: agentName || 'Suna',
+            name: agentName || 'Dimatic',
             avatar: agentAvatar
         };
     }, [threadMetadata, displayMessages, agentName, agentAvatar, agentMetadata, agentData]);
@@ -674,13 +674,13 @@ export const ThreadContent: React.FC<ThreadContentProps> = ({
                                 // Use merged groups instead of original grouped messages
                                 const finalGroupedMessages = mergedGroups;
 
-                                
+
                                 // Helper function to add streaming content to groups
                                 const appendStreamingContent = (content: string, isPlayback: boolean = false) => {
                                     const messageId = isPlayback ? 'playbackStreamingText' : 'streamingTextContent';
                                     const metadata = isPlayback ? 'playbackStreamingText' : 'streamingTextContent';
                                     const keySuffix = isPlayback ? 'playback-streaming' : 'streaming';
-                                    
+
                                     const lastGroup = finalGroupedMessages.at(-1);
                                     if (!lastGroup || lastGroup.type === 'user') {
                                         // Create new assistant group for streaming content
@@ -770,7 +770,7 @@ export const ThreadContent: React.FC<ThreadContentProps> = ({
                                             <div key={group.key} className="space-y-3">
                                                 {/* All file attachments rendered outside message bubble */}
                                                 {renderStandaloneAttachments(attachments as string[], handleOpenFileViewer, sandboxId, project, true)}
-                                                
+
                                                 <div className="flex justify-end">
                                                     <div className="flex max-w-[85%] rounded-3xl rounded-br-lg bg-card border px-4 py-3 break-words overflow-hidden">
                                                         <div className="space-y-3 min-w-0 flex-1">
@@ -789,7 +789,7 @@ export const ThreadContent: React.FC<ThreadContentProps> = ({
                                         // Get agent_id from the first assistant message in this group
                                         const firstAssistantMsg = group.messages.find(m => m.type === 'assistant');
                                         const groupAgentId = firstAssistantMsg?.agent_id;
-                                        
+
                                         return (
                                             <div key={group.key} ref={groupIndex === groupedMessages.length - 1 ? latestMessageRef : null}>
                                                 <div className="flex flex-col gap-2">
@@ -902,7 +902,7 @@ export const ThreadContent: React.FC<ThreadContentProps> = ({
 
                                                                         // Preprocess content first to remove text-only tool tags
                                                                         const textToRender = preprocessTextOnlyTools(streamingTextContent || '');
-                                                                        
+
                                                                         let detectedTag: string | null = null;
                                                                         let tagStartIndex = -1;
                                                                         if (textToRender) {
@@ -926,11 +926,11 @@ export const ThreadContent: React.FC<ThreadContentProps> = ({
                                                                         }
                                                                         const textBeforeTag = detectedTag ? textToRender.substring(0, tagStartIndex) : textToRender;
                                                                         const showCursor =
-                                                                          (streamHookStatus ===
-                                                                            'streaming' ||
-                                                                            streamHookStatus ===
-                                                                              'connecting') &&
-                                                                          !detectedTag;
+                                                                            (streamHookStatus ===
+                                                                                'streaming' ||
+                                                                                streamHookStatus ===
+                                                                                'connecting') &&
+                                                                            !detectedTag;
 
                                                                         // Show minimal processing indicator when agent is active but no streaming text after preprocessing
                                                                         if (!textToRender && (streamHookStatus === 'streaming' || streamHookStatus === 'connecting')) {
@@ -945,8 +945,8 @@ export const ThreadContent: React.FC<ThreadContentProps> = ({
 
                                                                         return (
                                                                             <>
-                                                                                <StreamingText 
-                                                                                    content={textBeforeTag} 
+                                                                                <StreamingText
+                                                                                    content={textBeforeTag}
                                                                                     className="text-sm prose prose-sm dark:prose-invert chat-markdown max-w-none [&>:first-child]:mt-0 prose-headings:mt-3 break-words overflow-wrap-anywhere"
                                                                                 />
 
@@ -971,7 +971,7 @@ export const ThreadContent: React.FC<ThreadContentProps> = ({
                                                                     {(() => {
                                                                         // Preprocess content first to remove text-only tool tags
                                                                         const textToRender = preprocessTextOnlyTools(streamingText || '');
-                                                                        
+
                                                                         let detectedTag: string | null = null;
                                                                         let tagStartIndex = -1;
                                                                         if (textToRender) {
@@ -1008,8 +1008,8 @@ export const ThreadContent: React.FC<ThreadContentProps> = ({
                                                                                     </pre>
                                                                                 ) : (
                                                                                     <>
-                                                                                        <StreamingText 
-                                                                                            content={textBeforeTag} 
+                                                                                        <StreamingText
+                                                                                            content={textBeforeTag}
                                                                                             className="text-sm prose prose-sm dark:prose-invert chat-markdown max-w-none [&>:first-child]:mt-0 prose-headings:mt-3 break-words overflow-wrap-anywhere"
                                                                                         />
 

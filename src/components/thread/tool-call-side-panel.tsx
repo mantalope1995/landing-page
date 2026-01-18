@@ -95,16 +95,15 @@ const ViewToggle: React.FC<ViewToggleProps> = ({ currentView, onViewChange }) =>
           damping: 30
         }}
       />
-      
+
       {/* Buttons */}
       <Button
         size="sm"
         onClick={() => onViewChange('tools')}
-        className={`relative z-10 h-7 w-7 p-0 rounded-xl bg-transparent hover:bg-transparent shadow-none ${
-          currentView === 'tools'
+        className={`relative z-10 h-7 w-7 p-0 rounded-xl bg-transparent hover:bg-transparent shadow-none ${currentView === 'tools'
             ? 'text-black'
             : 'text-gray-500 dark:text-gray-400'
-        }`}
+          }`}
         title="Switch to Tool View"
       >
         <Wrench className="h-3.5 w-3.5" />
@@ -113,11 +112,10 @@ const ViewToggle: React.FC<ViewToggleProps> = ({ currentView, onViewChange }) =>
       <Button
         size="sm"
         onClick={() => onViewChange('browser')}
-        className={`relative z-10 h-7 w-7 p-0 rounded-xl bg-transparent hover:bg-transparent shadow-none ${
-          currentView === 'browser'
+        className={`relative z-10 h-7 w-7 p-0 rounded-xl bg-transparent hover:bg-transparent shadow-none ${currentView === 'browser'
             ? 'text-black'
             : 'text-gray-500 dark:text-gray-400'
-        }`}
+          }`}
         title="Switch to Browser View"
       >
         <Globe className="h-3.5 w-3.5" />
@@ -128,7 +126,7 @@ const ViewToggle: React.FC<ViewToggleProps> = ({ currentView, onViewChange }) =>
 
 // Helper function to generate the computer title
 const getComputerTitle = (agentName?: string): string => {
-  return agentName ? `${agentName}'s Computer` : "Suna's Computer";
+  return agentName ? `${agentName}'s Computer` : "Dimatic's Computer";
 };
 
 // Reusable header component for the tool panel
@@ -152,7 +150,7 @@ const PanelHeader: React.FC<PanelHeaderProps> = ({
   layoutId,
 }) => {
   const title = getComputerTitle(agentName);
-  
+
   if (variant === 'drawer') {
     return (
       <DrawerHeader className="pb-2">
@@ -271,7 +269,7 @@ export function ToolCallSidePanel({
   // Add view toggle state  
   const [currentView, setCurrentView] = React.useState<'tools' | 'browser'>('tools');
   const currentViewRef = React.useRef(currentView);
-  
+
   // Update ref when state changes
   React.useEffect(() => {
     currentViewRef.current = currentView;
@@ -281,20 +279,20 @@ export function ToolCallSidePanel({
   const { isOpen: isDocumentModalOpen } = useDocumentModalStore();
 
   const sandbox = project?.sandbox;
-  
+
   // Add refresh key state for VNC iframe
   const [vncRefreshKey, setVncRefreshKey] = React.useState(0);
-  
+
   const handleVncRefresh = React.useCallback(() => {
     setVncRefreshKey(prev => prev + 1);
   }, []);
 
   const persistentVncIframe = React.useMemo(() => {
     if (!sandbox || !sandbox.vnc_preview || !sandbox.pass || !sandbox.id) return null;
-    
+
     return (
       <div>
-        <HealthCheckedVncIframe 
+        <HealthCheckedVncIframe
           key={vncRefreshKey}
           sandbox={{
             id: sandbox.id,
@@ -312,7 +310,7 @@ export function ToolCallSidePanel({
     const lowerName = toolName.toLowerCase();
     return [
       'browser-navigate-to',
-      'browser-act', 
+      'browser-act',
       'browser-extract-content',
       'browser-screenshot'
     ].includes(lowerName);
@@ -324,7 +322,7 @@ export function ToolCallSidePanel({
     const currentSnapshot = toolCallSnapshots[safeIndex];
     const isCurrentSnapshotBrowserTool = isBrowserTool(currentSnapshot?.toolCall.assistantCall?.name);
     setShowViewToggle(isCurrentSnapshotBrowserTool);
-    
+
     // Handle view switching based on agent status
     if (agentStatus === 'idle') {
       // Switch to tools view when navigating to a non-browser tool
@@ -337,20 +335,20 @@ export function ToolCallSidePanel({
       }
     } else if (agentStatus === 'running') {
       // Auto-switch for streaming tools when agent is actively running
-      const streamingSnapshot = toolCallSnapshots.find(snapshot => 
+      const streamingSnapshot = toolCallSnapshots.find(snapshot =>
         snapshot.toolCall.toolResult?.content === 'STREAMING'
       );
-      
+
       if (streamingSnapshot) {
         const streamingToolCall = streamingSnapshot.toolCall;
         const toolName = streamingToolCall.assistantCall?.name;
         const isStreamingBrowserTool = isBrowserTool(toolName);
-        
+
         // Switch to browser view when a browser tool starts streaming and we're in tools view
         if (isStreamingBrowserTool && currentViewRef.current === 'tools') {
           setCurrentView('browser');
         }
-        
+
         // Switch to tools view when a non-browser tool starts streaming and we're in browser view
         if (!isStreamingBrowserTool && currentViewRef.current === 'browser') {
           setCurrentView('tools');
@@ -641,7 +639,7 @@ export function ToolCallSidePanel({
       // Don't handle side panel shortcuts when document modal is open
       console.log('Side panel handler - document modal open:', isDocumentModalOpen, 'key:', event.key);
       if (isDocumentModalOpen) return;
-      
+
       if ((event.metaKey || event.ctrlKey) && event.key === 'i') {
         event.preventDefault();
         handleClose();
@@ -698,12 +696,12 @@ export function ToolCallSidePanel({
       return (
         <Drawer open={isOpen} onOpenChange={(open) => !open && onClose()}>
           <DrawerContent className="h-[85vh]">
-            <PanelHeader 
+            <PanelHeader
               agentName={agentName}
               onClose={handleClose}
               variant="drawer"
             />
-            
+
             <div className="flex-1 p-4 overflow-auto">
               <div className="space-y-4">
                 <Skeleton className="h-8 w-32" />
@@ -723,7 +721,7 @@ export function ToolCallSidePanel({
           <div className="border rounded-2xl flex flex-col shadow-2xl bg-background w-[90%] sm:w-[450px] md:w-[500px] lg:w-[550px] xl:w-[650px]">
             <div className="flex-1 flex flex-col overflow-hidden">
               <div className="flex flex-col h-full">
-                <PanelHeader 
+                <PanelHeader
                   agentName={agentName}
                   onClose={handleClose}
                   showMinimize={true}
@@ -749,7 +747,7 @@ export function ToolCallSidePanel({
       return (
         <div className="flex flex-col h-full">
           {!isMobile && (
-            <PanelHeader 
+            <PanelHeader
               agentName={agentName}
               onClose={handleClose}
             />
@@ -784,7 +782,7 @@ export function ToolCallSidePanel({
         return (
           <div className="flex flex-col h-full">
             {!isMobile && (
-              <PanelHeader 
+              <PanelHeader
                 agentName={agentName}
                 onClose={handleClose}
                 isStreaming={true}
@@ -824,7 +822,7 @@ export function ToolCallSidePanel({
       return (
         <div className="flex flex-col h-full">
           {!isMobile && (
-            <PanelHeader 
+            <PanelHeader
               agentName={agentName}
               onClose={handleClose}
             />
@@ -854,14 +852,14 @@ export function ToolCallSidePanel({
         currentIndex={displayIndex}
         totalCalls={displayTotalCalls}
         onFileClick={onFileClick}
-        viewToggle={<ViewToggle currentView={currentView} onViewChange={setCurrentView} />}  
+        viewToggle={<ViewToggle currentView={currentView} onViewChange={setCurrentView} />}
       />
     );
 
     return (
       <div className="flex flex-col h-full">
         {!isMobile && (
-          <PanelHeader 
+          <PanelHeader
             agentName={agentName}
             onClose={handleClose}
             isStreaming={isStreaming}
@@ -882,12 +880,12 @@ export function ToolCallSidePanel({
               </div>
             </div>
           )}
-          
+
           {/* Show browser not available message when no VNC and browser tab is selected */}
           {!persistentVncIframe && currentView === 'browser' && (
             <div className="h-full flex flex-col">
               <BrowserHeader isConnected={false} viewToggle={<ViewToggle currentView={currentView} onViewChange={setCurrentView} />} />
-              
+
               {/* Message content */}
               <div className="flex-1 flex flex-col items-center justify-center p-8 bg-zinc-50 dark:bg-zinc-900/50">
                 <div className="flex flex-col items-center space-y-4 max-w-sm text-center">
@@ -906,7 +904,7 @@ export function ToolCallSidePanel({
               </div>
             </div>
           )}
-          
+
           {/* Render tool view when tools tab is selected */}
           {currentView === 'tools' && toolView}
         </div>
@@ -919,16 +917,16 @@ export function ToolCallSidePanel({
     return (
       <Drawer open={isOpen} onOpenChange={(open) => !open && onClose()}>
         <DrawerContent className="h-[85vh]">
-          <PanelHeader 
+          <PanelHeader
             agentName={agentName}
             onClose={handleClose}
             variant="drawer"
           />
-          
+
           <div className="flex-1 flex flex-col overflow-hidden">
             {renderContent()}
           </div>
-          
+
           {(displayTotalCalls > 1 || (isCurrentToolStreaming && totalCompletedCalls > 0)) && (
             <div className="border-t border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 p-3">
               <div className="flex items-center justify-between">
@@ -986,7 +984,7 @@ export function ToolCallSidePanel({
               damping: 35
             }
           }}
-          className={compact 
+          className={compact
             ? "m-4 h-[calc(100%-2rem)] w-[calc(100%-2rem)] border rounded-3xl flex flex-col z-30"
             : "fixed top-2 right-2 bottom-4 border rounded-3xl flex flex-col z-30 w-[40vw] sm:w-[450px] md:w-[500px] lg:w-[550px] xl:w-[645px]"
           }

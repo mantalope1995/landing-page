@@ -5,11 +5,11 @@ import { MarketplaceTemplate } from '@/components/agents/installation/types';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { AgentIconAvatar } from '@/components/agents/config/agent-icon-avatar';
-import { 
-  Bot, 
-  Download, 
-  Share2, 
-  ChevronRight, 
+import {
+  Bot,
+  Download,
+  Share2,
+  ChevronRight,
   Sparkles,
   Clock,
   Users,
@@ -44,16 +44,16 @@ interface AgentTemplateLandingPageProps {
   template: MarketplaceTemplate;
 }
 
-const IntegrationIcon: React.FC<{ 
-  qualifiedName: string; 
-  displayName: string; 
+const IntegrationIcon: React.FC<{
+  qualifiedName: string;
+  displayName: string;
   customType?: string;
   size?: number;
 }> = ({ qualifiedName, displayName, customType, size = 20 }) => {
   const firstLetter = displayName.charAt(0).toUpperCase();
   const getIconColor = () => {
     const colors = [
-      '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', 
+      '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4',
       '#FFEAA7', '#DDA0DD', '#98D8C8', '#FDA7DF'
     ];
     const index = displayName.charCodeAt(0) % colors.length;
@@ -67,25 +67,25 @@ const IntegrationIcon: React.FC<{
     'code': <Code size={size} />,
   };
 
-  const icon = iconMap[qualifiedName.toLowerCase()] || 
-                iconMap[customType?.toLowerCase() || ''];
+  const icon = iconMap[qualifiedName.toLowerCase()] ||
+    iconMap[customType?.toLowerCase() || ''];
 
   if (icon) {
     return <div className="text-primary">{icon}</div>;
   }
 
   return (
-    <div 
+    <div
       className="flex items-center justify-center rounded"
-      style={{ 
+      style={{
         backgroundColor: getIconColor() + '20',
         width: size + 8,
         height: size + 8
       }}
     >
-      <span 
-        className="font-semibold" 
-        style={{ 
+      <span
+        className="font-semibold"
+        style={{
           color: getIconColor(),
           fontSize: size * 0.7
         }}
@@ -101,7 +101,7 @@ export const AgentTemplateLandingPage: React.FC<AgentTemplateLandingPageProps> =
   const { user } = useAuth();
   const [isInstalling, setIsInstalling] = useState(false);
 
-  const isSunaAgent = template.is_kortix_team || false;
+  const isDimaticAgent = template.is_dimatic_team || false;
   const tools = template.mcp_requirements || [];
   const integrations = tools.filter(tool => !tool.custom_type || tool.custom_type !== 'sse');
   const customTools = tools.filter(tool => tool.custom_type === 'sse');
@@ -119,7 +119,7 @@ export const AgentTemplateLandingPage: React.FC<AgentTemplateLandingPageProps> =
     setIsInstalling(true);
     try {
       const response = await backendApi.post(`/api/templates/${template.id}/install`);
-      
+
       if (response?.data?.agent_id) {
         toast.success('Agent installed successfully!');
         router.push(`/agents/config/${response.data.agent_id}`);
@@ -128,7 +128,7 @@ export const AgentTemplateLandingPage: React.FC<AgentTemplateLandingPageProps> =
       }
     } catch (error: any) {
       console.error('Failed to install agent:', error);
-      
+
       // Handle specific error cases
       if (error.response?.status === 403) {
         toast.error('Access denied. Please check your permissions.');
@@ -179,24 +179,24 @@ export const AgentTemplateLandingPage: React.FC<AgentTemplateLandingPageProps> =
     <div className="min-h-screen bg-background">
       <section className="relative overflow-hidden">
         <div className="container mx-auto px-4 py-16 lg:py-24">
-          <motion.div 
+          <motion.div
             className="max-w-4xl mx-auto text-center"
             initial="initial"
             animate="animate"
             variants={staggerChildren}
           >
-            {isSunaAgent && (
-              <motion.div 
+            {isDimaticAgent && (
+              <motion.div
                 className="inline-flex items-center gap-2 mb-6"
                 variants={fadeInUp}
               >
                 <Badge variant="secondary" className="px-3 py-1 text-white">
-                  Built by Kortix
+                  Built by Dimatic
                 </Badge>
               </motion.div>
             )}
 
-            <motion.div 
+            <motion.div
               className="flex justify-center mb-8"
               variants={fadeInUp}
             >
@@ -212,21 +212,21 @@ export const AgentTemplateLandingPage: React.FC<AgentTemplateLandingPageProps> =
                 />
               </div>
             </motion.div>
-            
-            <motion.h1 
+
+            <motion.h1
               className="text-3xl lg:text-4xl font-semibold mb-4 text-foreground"
               variants={fadeInUp}
             >
               {template.name}
             </motion.h1>
-            
-            <motion.p 
+
+            <motion.p
               className="text-base lg:text-lg text-muted-foreground mb-8 max-w-2xl mx-auto"
               variants={fadeInUp}
             >
               {template.description || 'A powerful AI agent ready to assist you'}
             </motion.p>
-            <motion.div 
+            <motion.div
               className="flex flex-wrap justify-center gap-6 mb-10"
               variants={fadeInUp}
             >

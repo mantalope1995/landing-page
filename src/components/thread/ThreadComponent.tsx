@@ -80,7 +80,7 @@ export function ThreadComponent({ projectId, threadId, compact = false, configur
     setSelectedAgent,
     initializeFromAgents,
     getCurrentAgent,
-    isSunaAgent,
+    isDimaticAgent,
   } = useAgentSelection();
 
   const { data: agentsResponse } = useAgents();
@@ -176,20 +176,20 @@ export function ThreadComponent({ projectId, threadId, compact = false, configur
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
-    
+
     if (urlParams.get('google_auth') === 'success') {
       // Clean up the URL parameters first
       window.history.replaceState({}, '', window.location.pathname);
-      
+
       // Check if there was an intent to upload to Google Slides
       const uploadIntent = sessionStorage.getItem('google_slides_upload_intent');
       if (uploadIntent) {
         sessionStorage.removeItem('google_slides_upload_intent');
-        
+
         try {
           const uploadData = JSON.parse(uploadIntent);
           const { presentation_path, sandbox_url } = uploadData;
-          
+
           if (presentation_path && sandbox_url) {
             // Handle upload in async function
             (async () => {
@@ -197,10 +197,10 @@ export function ThreadComponent({ projectId, threadId, compact = false, configur
                 sandbox_url,
                 presentation_path
               );
-              
+
               // Show loading toast and handle upload
               const loadingToast = toast.loading('Google authentication successful! Uploading presentation...');
-              
+
               try {
                 await uploadPromise;
                 // Success toast is now handled universally by handleGoogleSlidesUpload
@@ -234,11 +234,11 @@ export function ThreadComponent({ projectId, threadId, compact = false, configur
       // Otherwise, fall back to threadAgentId (existing behavior)
       const threadAgentId = threadAgentData?.agent?.agent_id;
       const agentIdToUse = configuredAgentId || threadAgentId;
-      
+
       console.log(`[ThreadComponent] Agent initialization - configuredAgentId: ${configuredAgentId}, threadAgentId: ${threadAgentId}, selectedAgentId: ${selectedAgentId}`);
-      
+
       initializeFromAgents(agents, agentIdToUse);
-      
+
       // If configuredAgentId is provided, force selection and override any existing selection
       if (configuredAgentId && selectedAgentId !== configuredAgentId) {
         console.log(`[ThreadComponent] Forcing selection to configured agent: ${configuredAgentId} (was: ${selectedAgentId})`);
@@ -250,11 +250,11 @@ export function ThreadComponent({ projectId, threadId, compact = false, configur
   const { data: subscriptionData } = useSharedSubscription();
   const subscriptionStatus: SubscriptionStatus =
     subscriptionData?.status === 'active' ||
-    subscriptionData?.status === 'trialing'
+      subscriptionData?.status === 'trialing'
       ? 'active'
       : 'no_subscription';
 
-  const handleProjectRenamed = useCallback((newName: string) => {}, []);
+  const handleProjectRenamed = useCallback((newName: string) => { }, []);
 
   // Create restricted agent selection handler when configuredAgentId is provided
   const handleAgentSelect = useCallback((agentId: string | undefined) => {
@@ -270,7 +270,7 @@ export function ThreadComponent({ projectId, threadId, compact = false, configur
       // Ignore attempts to select other agents
       return;
     }
-    
+
     // Normal agent selection behavior
     setSelectedAgent(agentId);
   }, [configuredAgentId, setSelectedAgent]);
@@ -373,7 +373,7 @@ export function ThreadComponent({ projectId, threadId, compact = false, configur
     toast.error(`Stream Error: ${errorMessage}`);
   }, []);
 
-  const handleStreamClose = useCallback(() => {}, []);
+  const handleStreamClose = useCallback(() => { }, []);
 
   const {
     status: streamHookStatus,
@@ -601,11 +601,10 @@ export function ThreadComponent({ projectId, threadId, compact = false, configur
               Tool Result
             </div>
             <div
-              className={`px-2 py-0.5 rounded-full text-xs ${
-                isSuccess
+              className={`px-2 py-0.5 rounded-full text-xs ${isSuccess
                   ? 'bg-green-50 text-green-700 dark:bg-green-900 dark:text-green-300'
                   : 'bg-red-50 text-red-700 dark:bg-red-900 dark:text-red-300'
-              }`}
+                }`}
             >
               {isSuccess ? 'Success' : 'Failed'}
             </div>
@@ -715,7 +714,7 @@ export function ThreadComponent({ projectId, threadId, compact = false, configur
   // SEO title update
   useEffect(() => {
     if (projectName) {
-      document.title = `${projectName} | Dimatic Suna`;
+      document.title = `${projectName} | Dimatic`;
 
       const metaDescription = document.querySelector(
         'meta[name="description"]',
@@ -723,13 +722,13 @@ export function ThreadComponent({ projectId, threadId, compact = false, configur
       if (metaDescription) {
         metaDescription.setAttribute(
           'content',
-          `${projectName} - powered by Dimatic Suna`,
+          `${projectName} - powered by Dimatic`,
         );
       }
 
       const ogTitle = document.querySelector('meta[property="og:title"]');
       if (ogTitle) {
-        ogTitle.setAttribute('content', `${projectName} | Dimatic Suna`);
+        ogTitle.setAttribute('content', `${projectName} | Dimatic`);
       }
 
       const ogDescription = document.querySelector(
@@ -759,7 +758,7 @@ export function ThreadComponent({ projectId, threadId, compact = false, configur
     ) {
       hasCheckedUpgradeDialog.current = true;
       const hasSeenUpgradeDialog = localStorage.getItem(
-        'suna_upgrade_dialog_displayed',
+        'dimatic_upgrade_dialog_displayed',
       );
       const isFreeTier = subscriptionStatus === 'no_subscription';
       if (!hasSeenUpgradeDialog && isFreeTier && !isLocalMode()) {
@@ -770,7 +769,7 @@ export function ThreadComponent({ projectId, threadId, compact = false, configur
 
   const handleDismissUpgradeDialog = () => {
     setShowUpgradeDialog(false);
-    localStorage.setItem('suna_upgrade_dialog_displayed', 'true');
+    localStorage.setItem('dimatic_upgrade_dialog_displayed', 'true');
   };
 
   useEffect(() => {
@@ -903,7 +902,7 @@ export function ThreadComponent({ projectId, threadId, compact = false, configur
           compact={true}
         >
           {/* Thread Content - Scrollable */}
-          <div 
+          <div
             ref={scrollContainerRef}
             className="flex-1 overflow-y-auto overflow-x-hidden flex flex-col-reverse"
           >

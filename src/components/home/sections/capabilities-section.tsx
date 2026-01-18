@@ -52,7 +52,7 @@ const capabilities = [
   },
   {
     title: 'Work Around the Clock',
-    description: 'Suna never sleeps. Schedule tasks to run overnight, on weekends, or whenever you need work done without being there.',
+    description: 'Dimatic never sleeps. Schedule tasks to run overnight, on weekends, or whenever you need work done without being there.',
     icon: <Clock className="size-6" />,
   },
 ];

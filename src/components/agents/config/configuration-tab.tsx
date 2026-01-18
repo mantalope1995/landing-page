@@ -8,7 +8,7 @@ import { AgentPlaybooksConfiguration } from '../playbooks/agent-playbooks-config
 import { AgentTriggersConfiguration } from '../triggers/agent-triggers-configuration';
 import { AgentModelSelector } from './model-selector';
 import { toast } from 'sonner';
-import { KortixLogo } from '../../sidebar/kortix-logo';
+import { DimaticLogo } from '../../sidebar/dimatic-logo';
 
 interface ConfigurationTabProps {
   agentId: string;
@@ -38,7 +38,7 @@ interface ConfigurationTabProps {
   onToolsSave?: (tools: Record<string, boolean | { enabled: boolean; description: string }>) => void;
   initialAccordion?: string;
   agentMetadata?: {
-    is_suna_default?: boolean;
+    is_dimatic_default?: boolean;
     centrally_managed?: boolean;
     restrictions?: {
       system_prompt_editable?: boolean;
@@ -65,19 +65,19 @@ export function ConfigurationTab({
   agentMetadata,
   isLoading = false,
 }: ConfigurationTabProps) {
-  
-  const isSunaAgent = agentMetadata?.is_suna_default || false;
+
+  const isDimaticAgent = agentMetadata?.is_dimatic_default || false;
 
   const mapAccordion = (val?: string) => {
-    if (val === 'instructions') return isSunaAgent ? 'integrations' : 'system';
+    if (val === 'instructions') return isDimaticAgent ? 'integrations' : 'system';
     if (val === 'workflows') return 'playbooks';
-    if (isSunaAgent && (val === 'system' || val === 'tools')) {
+    if (isDimaticAgent && (val === 'system' || val === 'tools')) {
       return 'integrations';
     }
     if (['system', 'tools', 'integrations', 'knowledge', 'playbooks', 'triggers'].includes(val || '')) {
       return val!;
     }
-    return isSunaAgent ? 'integrations' : 'system';
+    return isDimaticAgent ? 'integrations' : 'system';
   };
 
   const [openAccordion, setOpenAccordion] = React.useState<string>(mapAccordion(initialAccordion));
@@ -92,9 +92,9 @@ export function ConfigurationTab({
   const areToolsEditable = !isViewingOldVersion && (restrictions.tools_editable !== false);
 
   const handleSystemPromptChange = (value: string) => {
-    if (!isSystemPromptEditable && isSunaAgent) {
+    if (!isSystemPromptEditable && isDimaticAgent) {
       toast.error("System prompt cannot be edited", {
-        description: "Suna's system prompt is managed centrally and cannot be changed.",
+        description: "Dimatic's system prompt is managed centrally and cannot be changed.",
       });
       return;
     }
@@ -106,13 +106,13 @@ export function ConfigurationTab({
   };
 
   const handleToolsChange = (tools: Record<string, boolean | { enabled: boolean; description: string }>) => {
-    if (!areToolsEditable && isSunaAgent) {
+    if (!areToolsEditable && isDimaticAgent) {
       toast.error("Tools cannot be modified", {
-        description: "Suna's default tools are managed centrally and cannot be changed.",
+        description: "Dimatic's default tools are managed centrally and cannot be changed.",
       });
       return;
     }
-    
+
     if (onToolsSave) {
       onToolsSave(tools);
     } else {
@@ -124,23 +124,23 @@ export function ConfigurationTab({
     <div className="h-full flex flex-col">
       <div className="flex-1 overflow-y-auto">
         <div className="px-8 py-0 space-y-3">
-          {isSunaAgent && (
+          {isDimaticAgent && (
             <div className="p-4 bg-primary/10 border border-primary-200 rounded-xl">
               <div className="flex items-center gap-3 mb-2">
                 <div className="text-primary-600">
-                  <KortixLogo size={20} />
+                  <DimaticLogo size={20} />
                 </div>
-                <span className="font-semibold text-primary-800">Suna Default Agent</span>
+                <span className="font-semibold text-primary-800">Dimatic Default Agent</span>
               </div>
               <p className="text-sm text-primary-700">
-                This is Suna's default agent with centrally managed system prompt and tools.
+                This is Dimatic's default agent with centrally managed system prompt and tools.
                 You can customize integrations, knowledge base, playbooks, and triggers to personalize your experience.
               </p>
             </div>
           )}
 
           <div className="space-y-3">
-            {!isSunaAgent && (
+            {!isDimaticAgent && (
               <>
                 <div className="group overflow-hidden rounded-2xl border border-border bg-card transition-all duration-300 hover:border-primary/10" data-tour="model-section">
                   <button
@@ -237,13 +237,13 @@ export function ConfigurationTab({
               {openAccordion === 'tools' && (
                 <div className="border-t border-border bg-muted/10">
                   <div className="p-4">
-                                         <AgentToolsConfiguration
-                       tools={displayData.agentpress_tools}
-                       onToolsChange={areToolsEditable ? handleToolsChange : () => { }}
-                       disabled={!areToolsEditable}
-                       isSunaAgent={isSunaAgent}
-                       isLoading={isLoading}
-                     />
+                    <AgentToolsConfiguration
+                      tools={displayData.agentpress_tools}
+                      onToolsChange={areToolsEditable ? handleToolsChange : () => { }}
+                      disabled={!areToolsEditable}
+                      isSunaAgent={isDimaticAgent}
+                      isLoading={isLoading}
+                    />
                   </div>
                 </div>
               )}
@@ -272,25 +272,25 @@ export function ConfigurationTab({
                 <div className="border-t border-border bg-muted/10">
                   <div className="p-4">
                     <AgentMCPConfiguration
-                       configuredMCPs={displayData.configured_mcps}
-                       customMCPs={displayData.custom_mcps}
-                       onMCPChange={onMCPChange}
-                       agentId={agentId}
-                       versionData={{
-                         configured_mcps: displayData.configured_mcps,
-                         custom_mcps: displayData.custom_mcps,
-                         system_prompt: displayData.system_prompt,
-                         agentpress_tools: displayData.agentpress_tools
-                       }}
-                       saveMode="callback"
-                       versionId={versionData?.version_id}
-                       isLoading={isLoading}
-                     />
+                      configuredMCPs={displayData.configured_mcps}
+                      customMCPs={displayData.custom_mcps}
+                      onMCPChange={onMCPChange}
+                      agentId={agentId}
+                      versionData={{
+                        configured_mcps: displayData.configured_mcps,
+                        custom_mcps: displayData.custom_mcps,
+                        system_prompt: displayData.system_prompt,
+                        agentpress_tools: displayData.agentpress_tools
+                      }}
+                      saveMode="callback"
+                      versionId={versionData?.version_id}
+                      isLoading={isLoading}
+                    />
                   </div>
                 </div>
               )}
             </div>
-            
+
             <div className="group overflow-hidden rounded-2xl border border-border bg-card transition-all duration-300 hover:border-primary/10" data-tour="knowledge-section">
               <button
                 className="w-full p-4 text-left group-hover:bg-muted/30 transition-all duration-300"
@@ -326,7 +326,7 @@ export function ConfigurationTab({
                 </div>
               </div>
             </div>
-            
+
             <div className="group overflow-hidden rounded-2xl border border-border bg-card transition-all duration-300 hover:border-primary/10" data-tour="playbooks-section">
               <button
                 className="w-full p-4 text-left group-hover:bg-muted/30 transition-all duration-300"

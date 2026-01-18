@@ -6,7 +6,7 @@ import { Bot, Menu, Plus, Zap, ChevronRight } from 'lucide-react';
 
 import { NavAgents } from '@/components/sidebar/nav-agents';
 import { NavUserWithTeams } from '@/components/sidebar/nav-user-with-teams';
-import { KortixLogo } from '@/components/sidebar/kortix-logo';
+import { DimaticLogo } from '@/components/sidebar/dimatic-logo';
 import { CTACard } from '@/components/sidebar/cta';
 import {
   Sidebar,
@@ -99,7 +99,7 @@ export function SidebarLeft({
     }
   }, [pathname, searchParams, isMobile, setOpenMobile]);
 
-  
+
   useEffect(() => {
     const fetchUserData = async () => {
       const supabase = createClient();
@@ -111,7 +111,7 @@ export function SidebarLeft({
           .eq('user_id', data.user.id)
           .in('role', ['admin', 'super_admin']);
         const isAdmin = roleData && roleData.length > 0;
-        
+
         setUser({
           name:
             data.user.user_metadata?.name ||
@@ -130,7 +130,7 @@ export function SidebarLeft({
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (isDocumentModalOpen) return;
-      
+
       if ((event.metaKey || event.ctrlKey) && event.key === 'b') {
         event.preventDefault();
         setOpen(!state.startsWith('expanded'));
@@ -158,7 +158,7 @@ export function SidebarLeft({
       <SidebarHeader className="px-2 py-2">
         <div className="flex h-[40px] items-center px-1 relative">
           <Link href="/dashboard" className="flex-shrink-0" onClick={() => isMobile && setOpenMobile(false)}>
-            <KortixLogo size={24} />
+            <DimaticLogo size={24} />
           </Link>
           {state !== 'collapsed' && (
             <div className="ml-2 transition-all duration-200 ease-in-out whitespace-nowrap">
@@ -179,10 +179,10 @@ export function SidebarLeft({
       <SidebarContent className="[&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']">
         <SidebarGroup>
           <Link href="/dashboard">
-            <SidebarMenuButton 
+            <SidebarMenuButton
               className={cn('touch-manipulation', {
                 'bg-accent text-accent-foreground font-medium': pathname === '/dashboard',
-              })} 
+              })}
               onClick={() => {
                 posthog.capture('new_task_clicked');
                 if (isMobile) setOpenMobile(false);
@@ -195,10 +195,10 @@ export function SidebarLeft({
             </SidebarMenuButton>
           </Link>
           <Link href="/tasks">
-            <SidebarMenuButton 
+            <SidebarMenuButton
               className={cn('touch-manipulation mt-1', {
                 'bg-accent text-accent-foreground font-medium': pathname === '/tasks',
-              })} 
+              })}
               onClick={() => {
                 if (isMobile) setOpenMobile(false);
               }}
@@ -251,7 +251,7 @@ export function SidebarLeft({
                         </SidebarMenuSubButton>
                       </SidebarMenuSubItem>
                       <SidebarMenuSubItem data-tour="new-agent">
-                        <SidebarMenuSubButton 
+                        <SidebarMenuSubButton
                           onClick={() => {
                             setShowNewAgentDialog(true);
                             if (isMobile) setOpenMobile(false);
@@ -289,8 +289,8 @@ export function SidebarLeft({
         <NavUserWithTeams user={user} />
       </SidebarFooter>
       <SidebarRail />
-      <NewAgentDialog 
-        open={showNewAgentDialog} 
+      <NewAgentDialog
+        open={showNewAgentDialog}
         onOpenChange={setShowNewAgentDialog}
       />
     </Sidebar>

@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
 import { useCreateTemplate, useUnpublishTemplate } from '@/hooks/react-query/secure-mcp/use-secure-mcp';
 import { toast } from 'sonner';
 import { AgentCard } from './custom-agents-page/agent-card';
-import { KortixLogo } from '../sidebar/kortix-logo';
+import { DimaticLogo } from '../sidebar/dimatic-logo';
 import { DynamicIcon } from 'lucide-react/dynamic';
 
 interface Agent {
@@ -33,7 +33,7 @@ interface Agent {
     version_number: number;
   };
   metadata?: {
-    is_suna_default?: boolean;
+    is_dimatic_default?: boolean;
     centrally_managed?: boolean;
     restrictions?: {
       system_prompt_editable?: boolean;
@@ -73,21 +73,21 @@ interface AgentModalProps {
   isUnpublishing: boolean;
 }
 
-const AgentModal: React.FC<AgentModalProps> = ({ 
-  agent, 
-  isOpen, 
-  onClose, 
-  onCustomize, 
-  onChat, 
-  onPublish, 
-  onUnpublish, 
-  isPublishing, 
-  isUnpublishing 
+const AgentModal: React.FC<AgentModalProps> = ({
+  agent,
+  isOpen,
+  onClose,
+  onCustomize,
+  onChat,
+  onPublish,
+  onUnpublish,
+  isPublishing,
+  isUnpublishing
 }) => {
   if (!agent) return null;
 
-  const isSunaAgent = agent.metadata?.is_suna_default || false;
-  
+  const isDimaticAgent = agent.metadata?.is_dimatic_default || false;
+
   const truncateDescription = (text?: string, maxLength = 120) => {
     if (!text || text.length <= maxLength) return text || 'Try out this agent';
     return text.substring(0, maxLength) + '...';
@@ -99,18 +99,18 @@ const AgentModal: React.FC<AgentModalProps> = ({
         <DialogTitle className="sr-only">Agent actions</DialogTitle>
         <div className="relative">
           <div className={`p-4 h-24 flex items-start justify-start relative`}>
-            {isSunaAgent ? (
+            {isDimaticAgent ? (
               <div className="p-6">
-                <KortixLogo size={48} />
+                <DimaticLogo size={48} />
               </div>
             ) : agent.icon_name ? (
-              <div 
+              <div
                 className="h-16 w-16 rounded-xl flex items-center justify-center"
                 style={{ backgroundColor: agent.icon_background || '#F3F4F6' }}
               >
-                <DynamicIcon 
-                  name={agent.icon_name as any} 
-                  size={32} 
+                <DynamicIcon
+                  name={agent.icon_name as any}
+                  size={32}
                   color={agent.icon_color || '#000000'}
                 />
               </div>
@@ -129,7 +129,7 @@ const AgentModal: React.FC<AgentModalProps> = ({
                 <h2 className="text-xl font-semibold text-foreground">
                   {agent.name}
                 </h2>
-                {!isSunaAgent && agent.current_version && (
+                {!isDimaticAgent && agent.current_version && (
                   <Badge variant="outline" className="text-xs">
                     <GitBranch className="h-3 w-3" />
                     {agent.current_version.version_name}
@@ -164,7 +164,7 @@ const AgentModal: React.FC<AgentModalProps> = ({
                 Chat
               </Button>
             </div>
-            {!isSunaAgent && (
+            {!isDimaticAgent && (
               <div className="pt-2">
                 {agent.is_public ? (
                   <div className="space-y-2">
@@ -223,10 +223,10 @@ const AgentModal: React.FC<AgentModalProps> = ({
   );
 };
 
-export const AgentsGrid: React.FC<AgentsGridProps> = ({ 
-  agents, 
-  onEditAgent, 
-  onDeleteAgent, 
+export const AgentsGrid: React.FC<AgentsGridProps> = ({
+  agents,
+  onEditAgent,
+  onDeleteAgent,
   onToggleDefault,
   deleteAgentMutation,
   isDeletingAgent,
@@ -236,7 +236,7 @@ export const AgentsGrid: React.FC<AgentsGridProps> = ({
   const [selectedAgent, setSelectedAgent] = useState<Agent | null>(null);
   const [unpublishingId, setUnpublishingId] = useState<string | null>(null);
   const router = useRouter();
-  
+
   const unpublishAgentMutation = useUnpublishTemplate();
 
   const handleAgentClick = (agent: Agent) => {
@@ -283,10 +283,10 @@ export const AgentsGrid: React.FC<AgentsGridProps> = ({
             ...agent,
             id: agent.agent_id
           };
-          
+
           const isDeleting = isDeletingAgent?.(agent.agent_id) || false;
           const isGloballyDeleting = deleteAgentMutation?.isPending || false;
-          
+
           return (
             <div key={agent.agent_id} className="relative group flex flex-col h-full">
               {isDeleting && (
@@ -297,7 +297,7 @@ export const AgentsGrid: React.FC<AgentsGridProps> = ({
                   </div>
                 </div>
               )}
-              
+
               <div className={`transition-all duration-200 ${isDeleting ? 'opacity-60 scale-95' : ''}`}>
                 <AgentCard
                   mode="agent"
@@ -310,8 +310,8 @@ export const AgentsGrid: React.FC<AgentsGridProps> = ({
                 {!agent.is_default && (
                   <AlertDialog>
                     <AlertDialogTrigger asChild>
-                      <Button 
-                        variant="ghost" 
+                      <Button
+                        variant="ghost"
                         size="sm"
                         className="h-7 w-7 p-0 hover:bg-destructive/10 hover:text-destructive text-muted-foreground"
                         disabled={isDeleting || isGloballyDeleting}

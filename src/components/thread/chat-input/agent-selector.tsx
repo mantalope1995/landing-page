@@ -20,14 +20,13 @@ import { NewAgentDialog } from '@/components/agents/new-agent-dialog';
 
 import { useRouter } from 'next/navigation';
 import { cn, truncateString } from '@/lib/utils';
-import { KortixLogo } from '@/components/sidebar/kortix-logo';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 interface AgentSelectorProps {
   selectedAgentId?: string;
   onAgentSelect?: (agentId: string | undefined) => void;
   disabled?: boolean;
-  isSunaAgent?: boolean;
+  isDimaticAgent?: boolean;
   compact?: boolean;
 }
 
@@ -35,7 +34,7 @@ export const AgentSelector: React.FC<AgentSelectorProps> = ({
   selectedAgentId,
   onAgentSelect,
   disabled = false,
-  isSunaAgent,
+  isDimaticAgent,
   compact = false
 }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -72,10 +71,10 @@ export const AgentSelector: React.FC<AgentSelectorProps> = ({
     if (!selectedAgentId) {
       return filteredAgents;
     }
-    
+
     const selectedAgent = filteredAgents.find(agent => agent.id === selectedAgentId);
     const otherAgents = filteredAgents.filter(agent => agent.id !== selectedAgentId);
-    
+
     return selectedAgent ? [selectedAgent, ...otherAgents] : filteredAgents;
   }, [filteredAgents, selectedAgentId]);
 
@@ -93,21 +92,21 @@ export const AgentSelector: React.FC<AgentSelectorProps> = ({
   const getAgentDisplay = () => {
     const selectedAgent = allAgents.find(agent => agent.id === selectedAgentId);
     if (selectedAgent) {
-      const isSelectedAgentSuna = selectedAgent.metadata?.is_suna_default || false;
+      const isSelectedAgentDimatic = selectedAgent.metadata?.is_dimatic_default || false;
       return {
         name: selectedAgent.name,
-        icon: isSelectedAgentSuna ? <KortixLogo size={16} /> : selectedAgent.icon
+        icon: isSelectedAgentDimatic ? <span className="font-bold text-primary">D</span> : selectedAgent.icon
       };
     }
-    
+
     if (selectedAgentId !== undefined) {
     }
-    
+
     const defaultAgent = allAgents[0];
-    const isDefaultAgentSuna = defaultAgent?.metadata?.is_suna_default || false;
+    const isDefaultAgentDimatic = defaultAgent?.metadata?.is_dimatic_default || false;
     return {
-      name: defaultAgent?.name || 'Suna',
-      icon: isDefaultAgentSuna ? <KortixLogo size={16} /> : (defaultAgent?.icon || <KortixLogo size={16} />)
+      name: defaultAgent?.name || 'Dimatic',
+      icon: isDefaultAgentDimatic ? <span className="font-bold text-primary">D</span> : (defaultAgent?.icon || <span className="font-bold text-primary">D</span>)
     };
   };
 
@@ -157,7 +156,7 @@ export const AgentSelector: React.FC<AgentSelectorProps> = ({
     const isSelected = agent.id === selectedAgentId;
     const isHighlighted = index === highlightedIndex;
     const hasSettings = agent.type === 'custom' && agent.id;
-    const isThisAgentSuna = agent.metadata?.is_suna_default || false;
+    const isThisAgentDimatic = agent.metadata?.is_dimatic_default || false;
 
     return (
       <TooltipProvider key={agent.id || 'default'}>
@@ -172,8 +171,8 @@ export const AgentSelector: React.FC<AgentSelectorProps> = ({
               onMouseEnter={() => setHighlightedIndex(index)}
             >
               <div className="flex-shrink-0">
-                {isThisAgentSuna ? (
-                  <KortixLogo size={16} />
+                {isThisAgentDimatic ? (
+                  <span className="font-bold text-primary">D</span>
                 ) : (
                   agent.icon
                 )}
@@ -233,7 +232,7 @@ export const AgentSelector: React.FC<AgentSelectorProps> = ({
                   variant="ghost"
                   size="sm"
                   className={cn(
-                    compact 
+                    compact
                       ? "px-2 py-1 text-xs hover:bg-accent/40 transition-all duration-200 rounded-lg"
                       : "px-2.5 py-1.5 text-sm font-normal hover:bg-accent/40 transition-all duration-200 rounded-xl",
                     "focus:ring-1 focus:ring-ring focus:ring-offset-1 focus:outline-none",
@@ -246,18 +245,18 @@ export const AgentSelector: React.FC<AgentSelectorProps> = ({
                       {agentDisplay.icon}
                     </div>
                     <span className={cn(
-                      compact 
+                      compact
                         ? "truncate max-w-[100px] text-xs font-medium"
                         : "hidden sm:inline-block truncate max-w-[120px] font-medium"
                     )}>
                       {agentDisplay.name}
                     </span>
-                    <ChevronDown 
-                      size={compact ? 10 : 12} 
+                    <ChevronDown
+                      size={compact ? 10 : 12}
                       className={cn(
                         "opacity-50 transition-transform duration-200",
                         isOpen && "rotate-180"
-                      )} 
+                      )}
                     />
                   </div>
                 </Button>
@@ -336,8 +335,8 @@ export const AgentSelector: React.FC<AgentSelectorProps> = ({
           </div>
         </DropdownMenuContent>
       </DropdownMenu>
-      <NewAgentDialog 
-        open={showNewAgentDialog} 
+      <NewAgentDialog
+        open={showNewAgentDialog}
         onOpenChange={setShowNewAgentDialog}
       />
     </>

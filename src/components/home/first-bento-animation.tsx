@@ -2,6 +2,7 @@
 'use client';
 
 import { Icons } from '@/components/home/icons';
+import { DimaticLogo } from '@/components/sidebar/dimatic-logo';
 import {
   Reasoning,
   ReasoningContent,
@@ -70,7 +71,7 @@ export function FirstBentoAnimation() {
             }}
           >
             <p className="text-sm">
-              I need a digital assistant to help manage my email inbox. Can you create 
+              I need a digital assistant to help manage my email inbox. Can you create
               one that categorises messages and drafts responses automatically?
             </p>
           </motion.div>
@@ -84,11 +85,7 @@ export function FirstBentoAnimation() {
         </div>
         <div className="flex items-start gap-2">
           <div className="flex items-center bg-background rounded-full size-10 flex-shrink-0 justify-center shadow-[0_0_10px_rgba(0,0,0,0.05)] border border-border">
-            <img 
-              src="/kortix-symbol.svg" 
-              alt="Kortix Symbol" 
-              className="size-4 dark:invert"
-            />
+            <DimaticLogo size={14} showText={false} />
           </div>
 
           <div className="relative">

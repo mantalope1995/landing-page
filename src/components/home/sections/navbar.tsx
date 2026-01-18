@@ -4,14 +4,13 @@ import { NavMenu } from '@/components/home/nav-menu';
 import { ThemeToggle } from '@/components/home/theme-toggle';
 import { siteConfig } from '@/lib/home';
 import { cn } from '@/lib/utils';
-import { Menu, X, Github } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { AnimatePresence, motion, useScroll } from 'motion/react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useTheme } from 'next-themes';
 import { useAuth } from '@/components/AuthProvider';
-import { useGitHubStars } from '@/hooks/use-github-stars';
 import { useRouter, usePathname } from 'next/navigation';
 
 const INITIAL_WIDTH = '70rem';
@@ -61,7 +60,6 @@ export function Navbar() {
   const { theme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const { user } = useAuth();
-  const { formattedStars, loading: starsLoading } = useGitHubStars('kortix-ai', 'suna');
   const router = useRouter();
   const pathname = usePathname();
 
@@ -104,10 +102,10 @@ export function Navbar() {
   const handleOverlayClick = () => setIsDrawerOpen(false);
 
   const logoSrc = !mounted
-    ? '/kortix-logo.svg'
+    ? '/dimatic-logo.svg'
     : resolvedTheme === 'dark'
-      ? '/kortix-logo-white.svg'
-      : '/kortix-logo.svg';
+      ? '/dimatic-logo-white.svg'
+      : '/dimatic-logo.svg';
 
   return (
     <header
@@ -133,14 +131,7 @@ export function Navbar() {
             {/* Left Section - Logo */}
             <div className="flex items-center justify-start flex-shrink-0 w-auto md:w-[200px]">
               <Link href="/" className="flex items-center gap-3">
-                <Image
-                  src={logoSrc}
-                  alt="Kortix Logo"
-                  width={80}
-                  height={14}
-                  className="md:w-[100px] md:h-[18px]"
-                  priority
-                /> 
+                <span className="font-semibold text-lg tracking-tight">Dimatic</span>
               </Link>
             </div>
 
@@ -175,7 +166,7 @@ export function Navbar() {
                   ) : (
                     <Link
                       className="bg-secondary h-8 hidden md:flex items-center justify-center text-sm font-normal tracking-wide rounded-full text-primary-foreground dark:text-secondary-foreground w-fit px-4 shadow-[inset_0_1px_2px_rgba(255,255,255,0.25),0_3px_3px_-1.5px_rgba(16,24,40,0.06),0_1px_1px_rgba(16,24,40,0.08)] border border-white/[0.12]"
-                      href="/auth"
+                      href={siteConfig.authUrl}
                     >
                       Try free
                     </Link>
@@ -225,13 +216,13 @@ export function Navbar() {
                   <Link href="/" className="flex items-center gap-3">
                     <Image
                       src={logoSrc}
-                      alt="Kortix Logo"
+                      alt="Dimatic Logo"
                       width={120}
                       height={22}
                       priority
                     />
                     <span className="font-medium text-primary text-sm">
-                      / Suna
+                      / Dimatic
                     </span>
                   </Link>
                   <button
@@ -261,27 +252,26 @@ export function Navbar() {
                               setIsDrawerOpen(false);
                               return;
                             }
-                            
+
                             e.preventDefault();
-                            
+
                             // If we're not on the homepage, redirect to homepage with the section
                             if (pathname !== '/') {
                               router.push(`/${item.href}`);
                               setIsDrawerOpen(false);
                               return;
                             }
-                            
+
                             const element = document.getElementById(
                               item.href.substring(1),
                             );
                             element?.scrollIntoView({ behavior: 'smooth' });
                             setIsDrawerOpen(false);
                           }}
-                          className={`underline-offset-4 hover:text-primary/80 transition-colors ${
-                            (item.href.startsWith('#') && pathname === '/' && activeSection === item.href.substring(1)) || (item.href === pathname)
-                              ? 'text-primary font-medium'
-                              : 'text-primary/60'
-                          }`}
+                          className={`underline-offset-4 hover:text-primary/80 transition-colors ${(item.href.startsWith('#') && pathname === '/' && activeSection === item.href.substring(1)) || (item.href === pathname)
+                            ? 'text-primary font-medium'
+                            : 'text-primary/60'
+                            }`}
                         >
                           {item.name}
                         </a>
@@ -315,7 +305,7 @@ export function Navbar() {
                     </Link>
                   ) : (
                     <Link
-                      href="/auth"
+                      href={siteConfig.authUrl}
                       className="bg-secondary h-8 flex items-center justify-center text-sm font-normal tracking-wide rounded-full text-primary-foreground dark:text-secondary-foreground w-full px-4 shadow-[inset_0_1px_2px_rgba(255,255,255,0.25),0_3px_3px_-1.5px_rgba(16,24,40,0.06),0_1px_1px_rgba(16,24,40,0.08)] border border-white/[0.12] hover:bg-secondary/80 transition-all ease-out active:scale-95"
                     >
                       Try free
@@ -331,5 +321,5 @@ export function Navbar() {
         )}
       </AnimatePresence>
     </header>
-  ); 
+  );
 }

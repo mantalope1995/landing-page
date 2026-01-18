@@ -29,7 +29,7 @@ const extractAppInfo = (qualifiedName: string, customType?: string) => {
       return { type: 'composio', slug: extractedSlug };
     }
   }
-  
+
   if (customType === 'composio') {
     if (qualifiedName?.startsWith('composio.')) {
       const extractedSlug = qualifiedName.substring(9);
@@ -38,27 +38,27 @@ const extractAppInfo = (qualifiedName: string, customType?: string) => {
       }
     }
   }
-  
+
   return null;
 };
 
-const IntegrationLogo: React.FC<{ 
-  qualifiedName: string; 
-  displayName: string; 
+const IntegrationLogo: React.FC<{
+  qualifiedName: string;
+  displayName: string;
   customType?: string;
   toolkitSlug?: string;
 }> = ({ qualifiedName, displayName, customType, toolkitSlug }) => {
   let appInfo = extractAppInfo(qualifiedName, customType);
-  
+
   if (!appInfo && toolkitSlug) {
     appInfo = { type: 'composio', slug: toolkitSlug };
   }
-  
+
   const { data: composioIconData } = useComposioToolkitIcon(
     appInfo?.type === 'composio' ? appInfo.slug : '',
     { enabled: appInfo?.type === 'composio' }
   );
-  
+
   let logoUrl: string | undefined;
   if (appInfo?.type === 'composio') {
     logoUrl = composioIconData?.icon_url;
@@ -96,18 +96,18 @@ export const MarketplaceAgentPreviewDialog: React.FC<MarketplaceAgentPreviewDial
 }) => {
   const router = useRouter();
   const [isGeneratingShareLink, setIsGeneratingShareLink] = React.useState(false);
-  
+
   if (!agent) return null;
 
   const avatar = '🤖';
   const avatar_color = '#6366f1';
-  const isSunaAgent = agent.is_kortix_team || false;
-  
+  const isDimaticAgent = agent.is_dimatic_team || false;
+
   const tools = agent.mcp_requirements || [];
-  
+
   const toolRequirements = tools.filter(req => req.source === 'tool');
   const triggerRequirements = tools.filter(req => req.source === 'trigger');
-  
+
   const integrations = toolRequirements.filter(tool => !tool.custom_type || tool.custom_type !== 'sse');
   const customTools = toolRequirements.filter(tool => tool.custom_type === 'sse');
 
@@ -124,7 +124,7 @@ export const MarketplaceAgentPreviewDialog: React.FC<MarketplaceAgentPreviewDial
     try {
       // Simple approach: use template ID directly in URL
       const shareUrl = `${window.location.origin}/templates/${agent.template_id}`;
-      
+
       await navigator.clipboard.writeText(shareUrl);
       toast.success('Share link copied to clipboard!');
     } catch (error: any) {
@@ -270,7 +270,7 @@ export const MarketplaceAgentPreviewDialog: React.FC<MarketplaceAgentPreviewDial
                     {triggerRequirements.map((trigger, index) => {
                       const appName = trigger.display_name?.split(' (')[0] || trigger.display_name;
                       const triggerName = trigger.display_name?.match(/\(([^)]+)\)/)?.[1] || trigger.display_name;
-                      
+
                       return (
                         <Badge
                           key={index}

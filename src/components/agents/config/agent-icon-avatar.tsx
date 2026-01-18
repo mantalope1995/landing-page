@@ -3,7 +3,7 @@
 import React from 'react';
 import { DynamicIcon } from 'lucide-react/dynamic';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
-import { KortixLogo } from '@/components/sidebar/kortix-logo';
+import { DimaticLogo } from '@/components/sidebar/dimatic-logo';
 import { cn } from '@/lib/utils';
 
 interface AgentIconAvatarProps {
@@ -14,7 +14,7 @@ interface AgentIconAvatarProps {
   agentName?: string;
   size?: number;
   className?: string;
-  isSunaDefault?: boolean;
+  isDimaticDefault?: boolean;
 }
 
 export function AgentIconAvatar({
@@ -25,60 +25,60 @@ export function AgentIconAvatar({
   agentName = 'Agent',
   size = 40,
   className,
-  isSunaDefault = false
+  isDimaticDefault = false
 }: AgentIconAvatarProps) {
-  if (isSunaDefault) {
+  if (isDimaticDefault) {
     return (
-      <div 
+      <div
         className={cn(
           "flex items-center justify-center rounded-lg bg-muted border",
           className
         )}
         style={{ width: size, height: size }}
       >
-        <KortixLogo size={size * 0.6} />
+        <DimaticLogo size={size * 0.6} />
       </div>
     );
   }
-  
+
   if (iconName) {
     return (
-      <div 
+      <div
         className={cn(
           "flex items-center justify-center rounded-lg transition-all",
           className
         )}
-        style={{ 
-          width: size, 
+        style={{
+          width: size,
           height: size,
           backgroundColor
         }}
       >
-        <DynamicIcon 
-          name={iconName as any} 
-          size={size * 0.5} 
+        <DynamicIcon
+          name={iconName as any}
+          size={size * 0.5}
           color={iconColor}
         />
       </div>
     );
   }
-  
+
   if (profileImageUrl) {
     return (
-      <Avatar 
+      <Avatar
         className={cn("rounded-lg", className)}
         style={{ width: size, height: size }}
       >
-        <AvatarImage 
-          src={profileImageUrl} 
+        <AvatarImage
+          src={profileImageUrl}
           alt={agentName}
           className="object-cover"
         />
         <AvatarFallback className="rounded-lg">
           <div className="w-full h-full flex items-center justify-center bg-muted">
-            <DynamicIcon 
-              name="bot" 
-              size={size * 0.5} 
+            <DynamicIcon
+              name="bot"
+              size={size * 0.5}
               color="#6B7280"
             />
           </div>
@@ -86,18 +86,18 @@ export function AgentIconAvatar({
       </Avatar>
     );
   }
-  
+
   return (
-    <div 
+    <div
       className={cn(
         "flex items-center justify-center rounded-lg bg-muted",
         className
       )}
       style={{ width: size, height: size }}
     >
-      <DynamicIcon 
-        name="bot" 
-        size={size * 0.5} 
+      <DynamicIcon
+        name="bot"
+        size={size * 0.5}
         color="#6B7280"
       />
     </div>

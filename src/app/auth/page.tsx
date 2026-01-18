@@ -29,7 +29,7 @@ import {
   DialogFooter,
 } from '@/components/ui/dialog';
 import GitHubSignIn from '@/components/GithubSignIn';
-import { KortixLogo } from '@/components/sidebar/kortix-logo';
+import { DimaticLogo } from '@/components/sidebar/dimatic-logo';
 import { Ripple } from '@/components/ui/ripple';
 import { ReleaseBadge } from '@/components/auth/release-badge';
 
@@ -97,7 +97,7 @@ function LoginContent() {
       'success' in result &&
       result.success &&
       'redirectTo' in result
-      ) {
+    ) {
       window.location.href = result.redirectTo as string;
       return null;
     }
@@ -266,30 +266,30 @@ function LoginContent() {
   }
 
   return (
-      <div className="min-h-screen bg-background relative">
-        <div className="absolute top-6 left-6 z-10">
-          <Link href="/" className="flex items-center">
-            <KortixLogo size={28} />
-          </Link>
-        </div>
-        <div className="flex min-h-screen">
-          <div className="relative flex-1 flex items-center justify-center p-4 lg:p-8">
-            <div className="absolute top-6 right-10 z-10">
-              <Link
-                href="/"
-                className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-4"
-              >
-                <ArrowLeft className="h-4 w-4" />
-                Back to home
-              </Link>
+    <div className="min-h-screen bg-background relative">
+      <div className="absolute top-6 left-6 z-10">
+        <Link href="/" className="flex items-center">
+          <DimaticLogo size={28} />
+        </Link>
+      </div>
+      <div className="flex min-h-screen">
+        <div className="relative flex-1 flex items-center justify-center p-4 lg:p-8">
+          <div className="absolute top-6 right-10 z-10">
+            <Link
+              href="/"
+              className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-4"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              Back to home
+            </Link>
+          </div>
+          <div className="w-full max-w-sm">
+            <div className="mb-4 flex items-center flex-col gap-3 sm:gap-4 justify-center">
+              <ReleaseBadge className='mb-2 sm:mb-4' text="Custom Agents, Playbooks, and more!" link="/changelog" />
+              <h1 className="text-xl sm:text-2xl font-semibold text-foreground text-center leading-tight">
+                {isSignUp ? 'Create your account' : 'Log into your account'}
+              </h1>
             </div>
-            <div className="w-full max-w-sm">
-              <div className="mb-4 flex items-center flex-col gap-3 sm:gap-4 justify-center">
-                <ReleaseBadge className='mb-2 sm:mb-4' text="Custom Agents, Playbooks, and more!" link="/changelog" />
-                <h1 className="text-xl sm:text-2xl font-semibold text-foreground text-center leading-tight">
-                  {isSignUp ? 'Create your account' : 'Log into your account'}
-                </h1>
-              </div>
             <div className="space-y-3 mb-4">
               <GoogleSignIn returnUrl={returnUrl || undefined} />
               <GitHubSignIn returnUrl={returnUrl || undefined} />
@@ -348,7 +348,7 @@ function LoginContent() {
                 </div>
               </div>
             </form>
-            
+
             <div className="mt-4 space-y-3 text-center text-sm">
               {!isSignUp && (
                 <button
@@ -359,17 +359,17 @@ function LoginContent() {
                   Forgot password?
                 </button>
               )}
-              
+
               <div>
                 <Link
-                  href={isSignUp 
+                  href={isSignUp
                     ? `/auth${returnUrl ? `?returnUrl=${returnUrl}` : ''}`
                     : `/auth?mode=signup${returnUrl ? `&returnUrl=${returnUrl}` : ''}`
                   }
                   className="text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  {isSignUp 
-                    ? 'Already have an account? Sign in' 
+                  {isSignUp
+                    ? 'Already have an account? Sign in'
                     : "Don't have an account? Sign up"
                   }
                 </Link>
@@ -405,11 +405,10 @@ function LoginContent() {
             />
             {forgotPasswordStatus.message && (
               <div
-                className={`p-3 rounded-md flex items-center gap-3 ${
-                  forgotPasswordStatus.success
+                className={`p-3 rounded-md flex items-center gap-3 ${forgotPasswordStatus.success
                     ? 'bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-900/50 text-green-800 dark:text-green-400'
                     : 'bg-destructive/10 border border-destructive/20 text-destructive'
-                }`}
+                  }`}
               >
                 {forgotPasswordStatus.success ? (
                   <CheckCircle className="h-4 w-4 flex-shrink-0" />

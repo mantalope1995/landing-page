@@ -25,7 +25,7 @@ const parseContent = (content: any): any => {
 
 const extractFromNewFormat = (content: any): CommandData => {
   const parsedContent = parseContent(content);
-  
+
   if (!parsedContent || typeof parsedContent !== 'object') {
     return { command: null, output: null, exitCode: null, sessionName: null, cwd: null, completed: null, success: undefined, timestamp: undefined };
   }
@@ -33,11 +33,11 @@ const extractFromNewFormat = (content: any): CommandData => {
   if ('tool_execution' in parsedContent && typeof parsedContent.tool_execution === 'object') {
     const toolExecution = parsedContent.tool_execution;
     const args = toolExecution.arguments || {};
-    
+
     // Handle the case where result.output is a string (like in your example)
     let output = toolExecution.result?.output;
     let parsedOutput: any = {};
-    
+
     if (typeof output === 'string') {
       // First try to parse it as JSON
       try {
@@ -81,10 +81,10 @@ const extractFromNewFormat = (content: any): CommandData => {
 
 const extractFromLegacyFormat = (content: any): Omit<CommandData, 'success' | 'timestamp'> => {
   const toolData = extractToolData(content);
-  
+
   if (toolData.toolResult) {
     const args = toolData.arguments || {};
-    
+
     return {
       command: toolData.command || args.command || null,
       output: toolData.toolResult.toolOutput || null,
@@ -96,7 +96,7 @@ const extractFromLegacyFormat = (content: any): Omit<CommandData, 'success' | 't
   }
 
   const legacyCommand = extractCommand(content);
-  
+
   return {
     command: legacyCommand,
     output: null,
@@ -175,16 +175,16 @@ export function extractCommandData(
   if (!command) {
     const rawCommand = extractCommand(assistantContent) || extractCommand(toolContent);
     command = rawCommand
-      ?.replace(/^suna@computer:~\$\s*/g, '')
+      ?.replace(/^dimatic@computer:~\$\s*/g, '')
       ?.replace(/\\n/g, '')
       ?.replace(/\n/g, '')
       ?.trim() || null;
   }
-  
+
   if (!output && toolContent) {
     output = extractCommandOutput(toolContent);
   }
-  
+
   if (exitCode === null && toolContent) {
     exitCode = extractExitCode(toolContent);
   }

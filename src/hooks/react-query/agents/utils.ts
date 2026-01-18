@@ -33,7 +33,7 @@ export type Agent = {
   version_count?: number;
   current_version?: AgentVersion | null;
   metadata?: {
-    is_suna_default?: boolean;
+    is_dimatic_default?: boolean;
     centrally_managed?: boolean;
     management_version?: string;
     restrictions?: {
@@ -261,16 +261,16 @@ export const createAgent = async (agentData: AgentCreateRequest): Promise<Agent>
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({ message: 'Unknown error' }));
       const isAgentLimitError = (response.status === 402) && (
-        errorData.error_code === 'AGENT_LIMIT_EXCEEDED' || 
+        errorData.error_code === 'AGENT_LIMIT_EXCEEDED' ||
         errorData.detail?.error_code === 'AGENT_LIMIT_EXCEEDED'
       );
-      
+
       if (isAgentLimitError) {
         const { AgentCountLimitError } = await import('@/lib/api');
         const errorDetail = errorData.detail || errorData;
         throw new AgentCountLimitError(response.status, errorDetail);
       }
-      
+
       throw new Error(errorData.message || `HTTP ${response.status}: ${response.statusText}`);
     }
 
@@ -499,4 +499,3 @@ export const getAgentVersion = async (
     throw err;
   }
 };
-  

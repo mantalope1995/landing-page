@@ -27,7 +27,7 @@ import { useAgentSelection } from '@/lib/stores/agent-selection-store';
 import { Examples } from './examples';
 import { useThreadQuery } from '@/hooks/react-query/threads/use-threads';
 import { normalizeFilenameToNFC } from '@/lib/utils/unicode';
-import { KortixLogo } from '../sidebar/kortix-logo';
+import { DimaticLogo } from '../sidebar/dimatic-logo';
 import { AgentRunLimitDialog } from '@/components/thread/agent-run-limit-dialog';
 import { CustomAgentsSection } from './custom-agents-section';
 import { toast } from 'sonner';
@@ -41,7 +41,7 @@ const PENDING_PROMPT_KEY = 'pendingAgentPrompt';
 const dashboardTourSteps: Step[] = [
   {
     target: '[data-tour="chat-input"]',
-    content: 'Type your questions or tasks here. Suna can help with research, analysis, automation, and much more.',
+    content: 'Type your questions or tasks here. Dimatic can help with research, analysis, automation, and much more.',
     title: 'Start a Conversation',
     placement: 'top',
     disableBeacon: true,
@@ -67,9 +67,9 @@ export function DashboardContent() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isRedirecting, setIsRedirecting] = useState(false);
   const [autoSubmit, setAutoSubmit] = useState(false);
-  const { 
-    selectedAgentId, 
-    setSelectedAgent, 
+  const {
+    selectedAgentId,
+    setSelectedAgent,
     initializeFromAgents,
     getCurrentAgent
   } = useAgentSelection();
@@ -114,9 +114,9 @@ export function DashboardContent() {
   const selectedAgent = selectedAgentId
     ? agents.find(agent => agent.agent_id === selectedAgentId)
     : null;
-  const displayName = selectedAgent?.name || 'Suna';
+  const displayName = selectedAgent?.name || 'Dimatic';
   const agentAvatar = undefined;
-  const isSunaAgent = selectedAgent?.metadata?.is_suna_default || false;
+  const isDimaticAgent = selectedAgent?.metadata?.is_dimatic_default || false;
 
   const threadQuery = useThreadQuery(initiatedThreadId || '');
 
@@ -153,7 +153,7 @@ export function DashboardContent() {
 
   const handleTourCallback = useCallback((data: CallBackProps) => {
     const { status, type, index } = data;
-    
+
     if (status === STATUS.FINISHED || status === STATUS.SKIPPED) {
       stopTour();
     } else if (type === 'step:after') {
@@ -327,19 +327,19 @@ export function DashboardContent() {
           },
         }}
       />
-      
+
       <TourConfirmationDialog
         open={showWelcome}
         onAccept={handleWelcomeAccept}
         onDecline={handleWelcomeDecline}
       />
 
-      <BillingModal 
-        open={showPaymentModal} 
+      <BillingModal
+        open={showPaymentModal}
         onOpenChange={setShowPaymentModal}
         showUsageLimitAlert={true}
       />
-      
+
       <div className="flex flex-col h-screen w-full overflow-hidden">
         <div className="flex-1 overflow-y-auto">
           <div className="min-h-full flex flex-col">
@@ -351,7 +351,7 @@ export function DashboardContent() {
             <div className="flex-1 flex items-center justify-center px-4 py-8">
               <div className="w-full max-w-[650px] flex flex-col items-center justify-center space-y-4 md:space-y-6">
                 <div className="flex flex-col items-center text-center w-full">
-                  <p 
+                  <p
                     className="tracking-tight text-2xl md:text-3xl font-normal text-foreground/90"
                     data-tour="dashboard-title"
                   >
@@ -381,7 +381,7 @@ export function DashboardContent() {
             {enabledEnvironment && (
               <div className="w-full px-4 pb-8" data-tour="custom-agents">
                 <div className="max-w-7xl mx-auto">
-                  <CustomAgentsSection 
+                  <CustomAgentsSection
                     onAgentSelect={setSelectedAgent}
                   />
                 </div>
@@ -389,7 +389,7 @@ export function DashboardContent() {
             )}
           </div>
         </div>
-        
+
         <BillingErrorAlert
           message={billingError?.message}
           currentUsage={billingError?.currentUsage}
