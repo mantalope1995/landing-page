@@ -32,7 +32,7 @@ const HeroSection = () => {
 
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-primary/10 to-secondary/10 border border-primary/20">
               <Zap className="w-4 h-4 text-primary" />
-              <span className="text-sm font-medium text-primary">Solutions for Aussie Businesses</span>
+              <span className="text-sm font-medium text-primary">Custom Solutions for Aussie Businesses</span>
             </div>
 
             <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-medium tracking-tighter text-balance text-center">

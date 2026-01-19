@@ -39,13 +39,12 @@ export function DimaticEnterpriseModal({
   }, []);
 
   const benefits = [
-    "Dedicated solution architect assigned",
-    "Enterprise-grade security & compliance",
-    "Custom integration with existing systems",
-    "Comprehensive team training included",
-    "Priority support & ongoing optimization",
-    "Scalable architecture for growth",
-    "Performance monitoring & analytics",
+    "Your own dedicated guide to help you succeed",
+    "Works seamlessly with tools you already use",
+    "We'll train your team every step of the way",
+    "Fast, friendly support whenever you need it",
+    "Grows with your business as you expand",
+    "Easy-to-understand reports on what's working",
     "100% satisfaction guarantee"
   ];
 
@@ -73,10 +72,10 @@ export function DimaticEnterpriseModal({
                 </div>
 
                 <h2 className="text-2xl lg:text-3xl font-semibold tracking-tight mb-3 text-foreground">
-                  Let's Design Your Custom AI Solution
+                  Let's Design Your Custom Solution
                 </h2>
                 <p className="text-base lg:text-lg text-muted-foreground mb-6 leading-relaxed">
-                  Schedule a strategy session with our solution architects to explore how custom AI workers can transform your specific business processes and workflows.
+                  Book a free chat with our team to discover how AI can help automate your daily tasks and save you time. We'll walk you through exactly how it works for businesses like yours.
                 </p>
               </div>
 
