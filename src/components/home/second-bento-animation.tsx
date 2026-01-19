@@ -8,14 +8,14 @@ import {
   SiWhatsapp,
   SiGooglesheets,
   SiSalesforce,
-  SiLinkedin,
   SiGooglechrome,
   SiX,
   SiInstagram,
   SiFacebook,
   SiDropbox,
   SiGithub,
-  SiMicrosoft,
+  SiTrello,
+  SiAsana,
 } from '@icons-pack/react-simple-icons';
 
 export function SecondBentoAnimation() {
@@ -45,7 +45,7 @@ export function SecondBentoAnimation() {
               <SiGmail className="size-8" />
             </div>
             <div className="size-12 bg-white rounded-full flex items-center justify-center shadow-lg border border-gray-100">
-              <SiMicrosoft className="size-8" />
+              <SiAsana className="size-8" />
             </div>
             <div className="size-12 bg-white rounded-full flex items-center justify-center shadow-lg border border-gray-100">
               <SiGooglecalendar className="size-8" />
@@ -78,7 +78,7 @@ export function SecondBentoAnimation() {
               <SiSalesforce className="size-8" />
             </div>
             <div className="size-12 bg-white rounded-full flex items-center justify-center shadow-lg border border-gray-100">
-              <SiLinkedin className="size-8" />
+              <SiTrello className="size-8" />
             </div>
           </OrbitingCircles>
 
