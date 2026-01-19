@@ -1,22 +1,9 @@
 'use client';
 
-import { useMediaQuery } from '@/hooks/use-media-query';
-import { siteConfig } from '@/lib/home';
 import Link from 'next/link';
-
-import { useTheme } from 'next-themes';
 import { DimaticLogo } from '../../sidebar/dimatic-logo';
-import { useEffect, useState } from 'react';
 
 export function FooterSection() {
-  const tablet = useMediaQuery('(max-width: 1024px)');
-  const { theme, resolvedTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  // After mount, we can access the theme
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
 
 

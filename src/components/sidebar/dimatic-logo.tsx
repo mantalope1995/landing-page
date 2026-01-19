@@ -22,14 +22,20 @@ export function DimaticLogo({ size = 32, className, showText = false, theme = 's
 
     return (
         <div
-            className={cn("relative flex items-center justify-center", className)}
-            style={{
-                width: size,
-                height: size,
-                minWidth: size,
-                minHeight: size
-            }}
-        ><span className="flex items-center justify-center bg-primary text-primary-foreground rounded-md w-[1.2em] h-[1.2em] text-[0.8em]">D</span>
+            className={cn("relative flex items-center gap-2", className)}
+        >
+            <img
+                src="/dimatic-symbol.svg"
+                alt="Dimatic"
+                width={size}
+                height={size}
+                style={{
+                    width: size,
+                    height: size,
+                    minWidth: size,
+                    minHeight: size
+                }}
+            />
             {showText && <span className="tracking-tight">Dimatic</span>}
         </div>
     );
