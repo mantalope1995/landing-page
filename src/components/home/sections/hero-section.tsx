@@ -370,7 +370,7 @@ export function HeroSection() {
               />
             </h1>
             <p className="text-base md:text-lg text-center text-muted-foreground font-medium text-balance leading-relaxed tracking-tight max-w-2xl px-2">
-            Get your own AI assistant to handle the boring work—so you can focus on growing your business.
+            Get your own AI assistant to handle the boring work, so you can focus on growing your business.
             </p>
           </div>
 

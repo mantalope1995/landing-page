@@ -1170,39 +1170,39 @@ export const siteConfig = {
     faQitems: [
       {
         id: 1,
-        question: 'What is an AI Worker?',
+        question: 'What is an AI Assistant?',
         answer:
-          'An AI Worker is like having a clever team member who works 24/7, learns from your feedback, and handles tasks without you needing to watch over them.',
+          'An AI Assistant is like having a clever team member who works 24/7, learns from your feedback, and handles tasks without you needing to watch over them.',
       },
       {
         id: 2,
         question: 'How does Dimatic work?',
         answer:
-          'You tell Dimatic what you need in plain English. Dimatic figures out the steps, connects to your tools, and gets the job done—just like a capable employee would.',
+          'You tell Dimatic what you need in plain language. Dimatic figures out the steps, connects to your tools, and gets the job done—just like a capable employee would.',
       },
       {
         id: 3,
-        question: 'Is Dimatic really free?',
+        question: 'How much does Dimatic cost?',
         answer:
-          'Yes, Dimatic is completely free and open source. We believe everyone should have access to powerful AI tools without paying a fortune. You can use it, customise it, and help improve it without any cost.',
+          'Dimatic offers flexible pricing to fit your business needs. Start with our free trial to see how it works, then choose a plan based on how much you use it. You only pay for what you need. No hidden fees.',
       },
       {
         id: 4,
         question: 'Can I integrate Dimatic with my existing tools?',
         answer:
-          'Yes. Dimatic connects to the tools you already use—like your email, spreadsheets, and project management software—so everything works together seamlessly.',
+          'Yes. Dimatic connects to the tools you already use. Like your email, spreadsheets, and project management software. So everything works together seamlessly.',
       },
       {
         id: 5,
-        question: 'How can I contribute to Dimatic?',
+        question: 'Do I need technical skills to use Dimatic?',
         answer:
-          'You can contribute by submitting improvements on GitHub, reporting bugs, suggesting new features, or helping with documentation. Join our community to connect with other users and share ideas.',
+          'Not at all. Dimatic is built for business owners, not developers. You simply tell it what you need in everyday language, and it handles the technical stuff behind the scenes.',
       },
       {
         id: 6,
         question: 'How does Dimatic save me time?',
         answer:
-          'Dimatic handles the boring, repetitive work that eats up your day—like data entry, research, and follow-ups. This frees you up to focus on growing your business and serving your customers.',
+          'Dimatic handles the boring, repetitive work that eats up your day. Like data entry, research, and follow-ups. This frees you up to focus on growing your business and serving your customers.',
       },
     ],
   },
