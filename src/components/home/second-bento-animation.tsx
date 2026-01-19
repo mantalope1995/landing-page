@@ -3,7 +3,6 @@ import { DimaticLogo } from '@/components/sidebar/dimatic-logo';
 import {
   SiSlack,
   SiGmail,
-  SiMicrosoftexcel,
   SiGooglecalendar,
   SiNotion,
   SiWhatsapp,
@@ -16,6 +15,7 @@ import {
   SiFacebook,
   SiDropbox,
   SiGithub,
+  SiMicrosoft,
 } from '@icons-pack/react-simple-icons';
 
 export function SecondBentoAnimation() {
@@ -45,7 +45,7 @@ export function SecondBentoAnimation() {
               <SiGmail className="size-8" />
             </div>
             <div className="size-12 bg-white rounded-full flex items-center justify-center shadow-lg border border-gray-100">
-              <SiMicrosoftexcel className="size-8" />
+              <SiMicrosoft className="size-8" />
             </div>
             <div className="size-12 bg-white rounded-full flex items-center justify-center shadow-lg border border-gray-100">
               <SiGooglecalendar className="size-8" />
