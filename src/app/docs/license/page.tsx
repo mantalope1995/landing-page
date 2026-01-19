@@ -125,30 +125,44 @@ export default function LicensePage() {
 
         <div className="space-y-6">
           <div className="border-l-4 border-primary pl-6">
-            <h3 className="font-semibold mb-2">Can I use Dimatic in my commercial product?</h3>
+            <h3 className="font-semibold mb-2">Can I use Dimatic for my business?</h3>
             <p className="text-muted-foreground">
-              Yes! The Apache 2.0 license allows commercial use without any fees or restrictions.
+              Dimatic is designed for small businesses. Subscribe to a plan that suits your needs to access the platform for your business operations.
             </p>
           </div>
 
           <div className="border-l-4 border-primary pl-6">
-            <h3 className="font-semibold mb-2">Do I need to open source my modifications?</h3>
+            <h3 className="font-semibold mb-2">What about my data?</h3>
             <p className="text-muted-foreground">
-              No, you're not required to open source your modifications. However, you must indicate what changes you've made if you distribute the modified version.
+              Your use of data within Dimatic is subject to our Terms of Service and Privacy Policy. Please review these documents for details about data handling and your rights.
             </p>
           </div>
 
           <div className="border-l-4 border-primary pl-6">
-            <h3 className="font-semibold mb-2">Can I change the license for my derivative work?</h3>
+            <h3 className="font-semibold mb-2">Can I cancel my subscription?</h3>
             <p className="text-muted-foreground">
-              You can apply different license terms to your modifications, but the original Dimatic code remains under Apache 2.0.
+              Subscription terms, including cancellation policies, are outlined in your subscription agreement and our Terms of Service.
             </p>
           </div>
 
           <div className="border-l-4 border-primary pl-6">
-            <h3 className="font-semibold mb-2">What about patent protection?</h3>
+            <h3 className="font-semibold mb-2">What are the usage restrictions?</h3>
             <p className="text-muted-foreground">
-              The Apache 2.0 license includes an express grant of patent rights from contributors to users, protecting you from patent litigation.
+              Your subscription plan includes specific usage limits and features. Contact our support team or review your plan details to understand what's included in your subscription.
+            </p>
+          </div>
+
+          <div className="border-l-4 border-primary pl-6">
+            <h3 className="font-semibold mb-2">Can multiple people use my account?</h3>
+            <p className="text-muted-foreground">
+              Team access and collaboration features vary by subscription plan. Check your plan details to see what's available for your account.
+            </p>
+          </div>
+
+          <div className="border-l-4 border-primary pl-6">
+            <h3 className="font-semibold mb-2">Where can I find more information?</h3>
+            <p className="text-muted-foreground">
+              For detailed information about your rights and obligations, please refer to our Terms of Service, Privacy Policy, and subscription agreement.
             </p>
           </div>
         </div>

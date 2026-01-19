@@ -1,5 +1,22 @@
 import { OrbitingCircles } from '@/components/home/ui/orbiting-circle';
 import { DimaticLogo } from '@/components/sidebar/dimatic-logo';
+import {
+  SiSlack,
+  SiGmail,
+  SiMicrosoftexcel,
+  SiGooglecalendar,
+  SiNotion,
+  SiWhatsapp,
+  SiGooglesheets,
+  SiSalesforce,
+  SiLinkedin,
+  SiGooglechrome,
+  SiX,
+  SiInstagram,
+  SiFacebook,
+  SiDropbox,
+  SiGithub,
+} from '@icons-pack/react-simple-icons';
 
 export function SecondBentoAnimation() {
   return (
@@ -22,31 +39,31 @@ export function SecondBentoAnimation() {
             speed={1}
           >
             <div className="size-12 bg-white rounded-full flex items-center justify-center shadow-lg border border-gray-100">
-              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/slack/slack-original.svg" alt="Slack" className="size-8" />
+              <SiSlack className="size-8" />
             </div>
             <div className="size-12 bg-white rounded-full flex items-center justify-center shadow-lg border border-gray-100">
-              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" alt="Google" className="size-8" />
+              <SiGmail className="size-8" />
             </div>
             <div className="size-12 bg-white rounded-full flex items-center justify-center shadow-lg border border-gray-100">
-              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/excel/excel-original.svg" alt="Excel" className="size-8" />
+              <SiMicrosoftexcel className="size-8" />
             </div>
             <div className="size-12 bg-white rounded-full flex items-center justify-center shadow-lg border border-gray-100">
-              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" alt="Gmail" className="size-8" />
+              <SiGooglecalendar className="size-8" />
             </div>
           </OrbitingCircles>
 
           <OrbitingCircles index={1} iconSize={60} speed={0.5}>
             <div className="size-12 bg-white rounded-full flex items-center justify-center shadow-lg border border-gray-100">
-              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" alt="Google Calendar" className="size-8" />
+              <SiNotion className="size-8" />
             </div>
             <div className="size-12 bg-white rounded-full flex items-center justify-center shadow-lg border border-gray-100">
-              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/notion/notion-original.svg" alt="Notion" className="size-8" />
+              <SiWhatsapp className="size-8" />
             </div>
             <div className="size-12 bg-white rounded-full flex items-center justify-center shadow-lg border border-gray-100">
-              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/whatsapp/whatsapp-original.svg" alt="WhatsApp" className="size-8" />
+              <SiGooglesheets className="size-8" />
             </div>
             <div className="size-12 bg-white rounded-full flex items-center justify-center shadow-lg border border-gray-100">
-              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/googlesheets/googlesheets-original.svg" alt="Google Sheets" className="size-8" />
+              <SiDropbox className="size-8" />
             </div>
           </OrbitingCircles>
 
@@ -58,10 +75,10 @@ export function SecondBentoAnimation() {
             speed={0.5}
           >
             <div className="size-12 bg-white rounded-full flex items-center justify-center shadow-lg border border-gray-100">
-              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/salesforce/salesforce-original.svg" alt="Salesforce" className="size-8" />
+              <SiSalesforce className="size-8" />
             </div>
             <div className="size-12 bg-white rounded-full flex items-center justify-center shadow-lg border border-gray-100">
-              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" alt="LinkedIn" className="size-8" />
+              <SiLinkedin className="size-8" />
             </div>
           </OrbitingCircles>
 
@@ -73,22 +90,19 @@ export function SecondBentoAnimation() {
             speed={0.3}
           >
             <div className="size-10 bg-white rounded-full flex items-center justify-center shadow-md border border-gray-100 opacity-75">
-              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/chrome/chrome-original.svg" alt="Chrome" className="size-6" />
+              <SiGooglechrome className="size-6" />
             </div>
             <div className="size-10 bg-white rounded-full flex items-center justify-center shadow-md border border-gray-100 opacity-75">
-              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/x/x-original.svg" alt="X" className="size-6" />
+              <SiX className="size-6" />
             </div>
             <div className="size-10 bg-white rounded-full flex items-center justify-center shadow-md border border-gray-100 opacity-75">
-              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/instagram/instagram-original.svg" alt="Instagram" className="size-6" />
+              <SiInstagram className="size-6" />
             </div>
             <div className="size-10 bg-white rounded-full flex items-center justify-center shadow-md border border-gray-100 opacity-75">
-              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/facebook/facebook-original.svg" alt="Facebook" className="size-6" />
+              <SiFacebook className="size-6" />
             </div>
             <div className="size-10 bg-white rounded-full flex items-center justify-center shadow-md border border-gray-100 opacity-75">
-              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dropbox/dropbox-original.svg" alt="Dropbox" className="size-6" />
-            </div>
-            <div className="size-10 bg-white rounded-full flex items-center justify-center shadow-md border border-gray-100 opacity-75">
-              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub" className="size-6" />
+              <SiGithub className="size-6" />
             </div>
           </OrbitingCircles>
         </div>

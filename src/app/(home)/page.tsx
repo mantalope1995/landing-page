@@ -33,7 +33,7 @@ export default function Home() {
             <BentoSection />
 
             {/* <AgentShowcaseSection /> */}
-            <UseCasesSection />
+            {/* <UseCasesSection /> */}
             <PricingSection />
             {/* <TestimonialSection /> */}
             <FAQSection />
